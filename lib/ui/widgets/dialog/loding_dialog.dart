@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 void showAlertBox(BuildContext context) {
   showDialog(
     context: context,
-    // barrierDismissible: false,
+     barrierDismissible: false,
     barrierColor: Colors.transparent,
     builder: (context) {
       return Center(

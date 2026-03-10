@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
+import 'package:school_erp/controlar/Auth_provider.dart';
+import 'package:school_erp/ui/screens/dashboard_screen.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -15,6 +19,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var data = Provider.of<AuthProvider>(context, listen: false);
+    Future<void> saveToken(String pin) async {
+      final prefs = await SharedPreferences.getInstance();
+      debugPrint("token from share prefrnce function ${data.tokan}");
+      await prefs.setString("Token", data.tokan);
+      var url = prefs.getString("Token");
+            debugPrint("token from phne Memory $url");
+
+
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -62,6 +77,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 Text(
                   "Pin Verfication",
                   maxLines: 2,
+
                   textAlign: TextAlign.center,
                   style: GoogleFonts.urbanist(
                     fontSize: 26,
@@ -85,9 +101,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: MaterialPinField(
+                        onChanged: (value) {
+                          setState(() {
+                            pin = value;
+                          });
+                        },
                         length: 4,
-                        onCompleted: (pin) {
-                          pin = pin;
+                        onCompleted: (value) {
+                          setState(() {
+                            pin = value;
+                          });
                         },
                         obscureText: true,
                         theme: MaterialPinTheme(
@@ -126,7 +149,28 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
 
                 const SizedBox(height: 10.0),
-                NextButton(onTap: () {}, text: "Login"),
+                NextButton(
+                  onTap: () async{
+                    Map<String, dynamic> requestData = {
+                      "mobile_no": data.mobileNo,
+                      "pin": pin,
+                    };
+                 await   data.pinVerfication(
+                      context: context,
+                      requestData: requestData,
+                    );
+                    if (data.tokan.isNotEmpty) {
+                      saveToken(data.tokan);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DashboardScreen(),
+                        ),
+                      );
+                    }
+                  },
+                  text: "Login",
+                ),
               ],
             ),
           ),

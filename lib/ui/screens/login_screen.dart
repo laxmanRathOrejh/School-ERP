@@ -1,13 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:school_erp/controlar/login_provider.dart';
-import 'package:school_erp/ui/screens/verification_screen.dart';
-import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
+import 'package:school_erp/controlar/Auth_provider.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
 
 class LoginScrenn extends StatefulWidget {
-  LoginScrenn({super.key});
+  const LoginScrenn({super.key});
 
   @override
   State<LoginScrenn> createState() => _LoginScrennState();
@@ -19,7 +19,8 @@ class _LoginScrennState extends State<LoginScrenn> {
 
   @override
   Widget build(BuildContext context) {
-    var data = Provider.of<LoginProvider>(context, listen: false);
+    var data = Provider.of<AuthProvider>(context, listen: false);
+    print("here is number${data.mobileNo}");
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -66,6 +67,7 @@ class _LoginScrennState extends State<LoginScrenn> {
                   ),
                   const SizedBox(height: 10.0),
                   TextFormField(
+                    style: TextStyle(fontSize: 14),
                     keyboardType: const TextInputType.numberWithOptions(),
                     controller: scholorContro,
                     textAlign: TextAlign.left,
@@ -81,6 +83,9 @@ class _LoginScrennState extends State<LoginScrenn> {
                       }
                       if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return "Only numbers allowed";
+                      }
+                      if (value.length != 10) {
+                        return "Mobile number must be 10 digits not ${value.length}";
                       } else {
                         return null;
                       }
@@ -90,20 +95,16 @@ class _LoginScrennState extends State<LoginScrenn> {
                   Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: NextButton(
-                      onTap: () {
-                        showAlertBox(context);
-
-                        // if (_formKey.currentState!.validate()) {
-                        //   Map<String, dynamic> requestData = {
-                        //     "scholorNo": scholorContro.text,
-                        //   };
-                        //   data.login(requestData: requestData);
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => VerificationScreen(),
-                        //     ),
-                        //   );
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          Map<String, dynamic> requestData = {
+                            "mobile_no": scholorContro.text,
+                          };
+                          await data.login(
+                            context: context,
+                            requestData: requestData,
+                          );
+                        }
                       },
                       text: "Login",
                     ),
