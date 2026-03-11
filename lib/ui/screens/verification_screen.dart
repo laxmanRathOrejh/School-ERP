@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/auth_provider.dart';
-import 'package:school_erp/ui/screens/dashboard_screen.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -19,13 +18,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<AuthProvider>(context, listen: false);
-    // Future<void> saveToken(String pin) async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   debugPrint("token from share prefrnce function ${data.tokan}");
-    //   await prefs.setString("Token", data.tokan);
-    //   var url = prefs.getString("Token");
-    //   debugPrint("token from phne Memory $url");
-    // }
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -51,6 +44,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
@@ -98,17 +92,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: MaterialPinField(
+                         
                         onChanged: (value) {
                           setState(() {
                             pin = value;
                           });
                         },
                         length: 4,
+                        
                         onCompleted: (value) {
                           setState(() {
                             pin = value;
                           });
                         },
+                        
                         obscureText: true,
                         theme: MaterialPinTheme(
                           shape: MaterialPinShape.outlined,
@@ -121,6 +118,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           spacing: 11,
                         ),
                         mainAxisAlignment: MainAxisAlignment.center,
+                        
                       ),
                     ),
                   ],
@@ -152,20 +150,21 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       "mobile_no": data.mobileNo,
                       "pin": pin,
                     };
+
                     await data.pinVerfication(
                       context: context,
                       requestData: requestData,
                     );
-                    if (data.tokan.isNotEmpty) {
-                      if (!context.mounted) return;
+                    // if (data.tokan.isNotEmpty) {
+                    //   if (!context.mounted) return;
 
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DashboardScreen(),
-                        ),
-                      );
-                    }
+                    //   Navigator.pushReplacement(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => DashboardScreen(),
+                    //     ),
+                    //   );
+                    // }
                   },
                   text: "Login",
                 ),

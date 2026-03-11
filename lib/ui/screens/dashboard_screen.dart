@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/calendar_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
+import 'package:school_erp/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -65,7 +66,7 @@ class DashboardScreen extends StatelessWidget {
   ];
   void removeToken() async {
     var shrf = await SharedPreferences.getInstance();
-    shrf.remove("Token");
+    shrf.remove(authToken);
     debugPrint("Token is removed");
   }
 
@@ -190,21 +191,9 @@ class DashboardScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CalanderScreen(),
-                        ),
-                      );
+                       context.push("/calendar/Screen");
                     },
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => dashbordItam[index]["route"],
-                    //     ),
-                    //   );
-                    // },
+
                     child: Column(
                       children: [
                         Container(

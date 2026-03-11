@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_erp/service/api_call.dart';
 import 'package:school_erp/service/api_endpoint.dart';
-import 'package:school_erp/ui/screens/create_pin_screen.dart';
-import 'package:school_erp/ui/screens/dashboard_screen.dart';
-import 'package:school_erp/ui/screens/login_screen.dart';
-import 'package:school_erp/ui/screens/verification_screen.dart';
 import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
 import 'package:school_erp/ui/widgets/dialog/message_dialog.dart';
 import 'package:school_erp/utils/constant.dart';
@@ -14,8 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   String mobileNo = "";
-  String tokan =    "";
-  
+  String tokanFromServer = "";
 
   Future<void> login({
     required Map<String, dynamic> requestData,
@@ -38,18 +34,9 @@ class AuthProvider extends ChangeNotifier {
     if (data["status"] == 200) {
       mobileNo = data["mobile_no"];
       if (data["is_pin"] == true) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => VerificationScreen()),
-        );
+        context.push("/Verificatin/Screen");
       } else if (data["is_pin"] == false) {
-        ///////////
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => CreatePinScreen()),
-        );
-
-        ///Navigator to Create pin screen
+        context.push("/CreatePin/Screen");
       } else {
         showMessageBox(context: context, text: data["error"]);
       }
@@ -78,10 +65,11 @@ class AuthProvider extends ChangeNotifier {
 
     hideLoader(context);
     if (data["status"] == 200) {
-      tokan = data["token"];
-      saveToken(tokan);
-      debugPrint("here we see token in provider $tokan");
-    } else if (data["status"] == 40) {
+      tokanFromServer = data["token"];
+      saveToken(tokanFromServer);
+      context.go("/dashbord/screen");
+      debugPrint("here we see token in provider $tokanFromServer");
+    } else if (data["status"] == 400) {
       showMessageBox(context: context, text: data["error"]);
     } else {
       showMessageBox(context: context, text: data.toString());
@@ -91,13 +79,13 @@ class AuthProvider extends ChangeNotifier {
   //SAVE TOKEN IN LOCAL MEMORMRY
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    debugPrint("token from share prefrnce function $tokan");
-    await prefs.setString(authToken, tokan);
+    debugPrint("token from share prefrnce function $tokanFromServer");
+    await prefs.setString(authToken, tokanFromServer);
     var url = prefs.getString("Token");
     debugPrint("token from phne Memory $url");
   }
 
-  //ChekToken for Screen 
+  //ChekToken for Screen
   void chekToken({required BuildContext context}) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -105,15 +93,9 @@ class AuthProvider extends ChangeNotifier {
     debugPrint("this is token from memory$token");
     Timer(const Duration(seconds: 2), () {
       if (token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
+        context.go("/dashbord/screen");
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScrenn()),
-        );
+        context.go("/login/Screen");
       }
     });
   }

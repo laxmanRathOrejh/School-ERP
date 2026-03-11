@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:school_erp/controlar/auth_provider.dart';
 import 'package:school_erp/controlar/calendar_provider.dart';
+import 'package:school_erp/routes/router.dart';
 import 'package:school_erp/ui/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,14 +23,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.unboundedTextTheme(),
         scaffoldBackgroundColor: const Color(0xFFF6F5F5),
       ),
       title: 'School ERP',
-      home: SplashScreen(),
+      
     );
   }
 }
