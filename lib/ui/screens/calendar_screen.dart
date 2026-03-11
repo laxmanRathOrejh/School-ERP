@@ -49,51 +49,48 @@ class _CalanderScreenState extends State<CalanderScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Color(0xFF20AE29),
-                    ),
-                    Text("Today Date"),
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Color.fromARGB(255, 44, 134, 252),
-                    ),
-                    Text("Selected Date"),
+                    CircleAvatar(radius: 8, backgroundColor: Color(0xFF20AE29)),
+                    Text("Today Date", style: TextStyle(fontSize: 12)),
+                    CircleAvatar(radius: 8, backgroundColor: Color(0xFF2C86FC)),
+                    Text("Selected Date", style: TextStyle(fontSize: 12)),
                   ],
                 ),
                 Consumer<CalendarProvider>(
                   builder: (context, value, child) {
-                    return TableCalendar(
-                      focusedDay: _focusedDay,
-                      firstDay: DateTime.now(),
-                      lastDay: DateTime(2030),
-                      headerStyle: HeaderStyle(
-                        titleCentered: true,
-                        titleTextStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TableCalendar(
+                        focusedDay: _focusedDay,
+                        firstDay: DateTime.now(),
+                        lastDay: DateTime(2030),
+                        headerStyle: HeaderStyle(
+                          titleCentered: true,
+                          titleTextStyle: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          formatButtonVisible: false,
                         ),
-                        formatButtonVisible: false,
-                      ),
-                      selectedDayPredicate: (day) {
-                        return isSameDay(_selectedDay, day);
-                      },
-                      onDaySelected: (selectedDay, focusedDay) {
-                        setState(() {
-                          _selectedDay = selectedDay;
-                          _focusedDay = focusedDay;
-                        });
-                      },
-                      eventLoader: data.getEventsForDay,
+                        selectedDayPredicate: (day) {
+                          return isSameDay(_selectedDay, day);
+                        },
+                        onDaySelected: (selectedDay, focusedDay) {
+                          setState(() {
+                            _selectedDay = selectedDay;
+                            _focusedDay = focusedDay;
+                          });
+                        },
+                        eventLoader: data.getEventsForDay,
 
-                      calendarStyle: CalendarStyle(
-                        selectedDecoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                        todayDecoration: BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
+                        calendarStyle: CalendarStyle(
+                          selectedDecoration: BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle,
+                          ),
+                          todayDecoration: BoxDecoration(
+                            color: Colors.green,
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
                     );
@@ -103,94 +100,100 @@ class _CalanderScreenState extends State<CalanderScreen>
 
                 selectedEvents.isEmpty
                     ? SizedBox()
-                    : Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Event Detail",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 40),
-                          ListView.builder(
-                            shrinkWrap: true,
-
-                            itemCount: selectedEvents.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                    : Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Event Detail",
+                                    style: TextStyle(fontSize: 14),
                                   ),
-                                  child: ListView(
-                                    //  physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              selectedEvents[index]["type"] ==
-                                                  "exam"
-                                              ? Color(0xFFA5D2AB)
-                                              : Color(0xFF94BDD7),
-                                          // color: Color(0xFFA5D2AB),
-                                          borderRadius: BorderRadius.circular(
-                                            10,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            ListView.builder(
+                              shrinkWrap: true,
+
+                              itemCount: selectedEvents.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListView(
+                                      //  physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color:
+                                                selectedEvents[index]["type"] ==
+                                                    "exam"
+                                                ? Color(0xFFA5D2AB)
+                                                : Color(0xFF94BDD7),
+                                            // color: Color(0xFFA5D2AB),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            textBaseline:
+                                                TextBaseline.alphabetic,
+                                            children: [
+                                              SizedBox(width: 20),
+                                              Icon(
+                                                Icons.sunny,
+                                                color:
+                                                    selectedEvents[index]["type"] ==
+                                                        "exam"
+                                                    ? Color(0xFF1F972F)
+                                                    : Color(0xFF1985C9),
+                                                size: 25,
+                                              ),
+                                              SizedBox(width: 20),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      selectedEvents[index]["eventTitle"],
+                                                    ),
+                                                    Text(
+                                                      selectedEvents[index]["sub_title"],
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Color(
+                                                          0xFF717374,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        child: Row(
-                                          textBaseline: TextBaseline.alphabetic,
-                                          children: [
-                                            SizedBox(width: 20),
-                                            Icon(
-                                              Icons.sunny,
-                                              color:
-                                                  selectedEvents[index]["type"] ==
-                                                      "exam"
-                                                  ? Color(0xFF1F972F)
-                                                  : Color(0xFF1985C9),
-                                              size: 25,
-                                            ),
-                                            SizedBox(width: 20),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 5,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    selectedEvents[index]["eventTitle"],
-                                                  ),
-                                                  Text(
-                                                    selectedEvents[index]["sub_title"],
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xFF717374),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
               ],
             ),
