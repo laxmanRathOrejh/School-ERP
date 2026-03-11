@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import 'package:school_erp/controlar/Auth_provider.dart';
+import 'package:school_erp/controlar/auth_provider.dart';
 import 'package:school_erp/ui/screens/dashboard_screen.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -20,15 +19,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<AuthProvider>(context, listen: false);
-    Future<void> saveToken(String pin) async {
-      final prefs = await SharedPreferences.getInstance();
-      debugPrint("token from share prefrnce function ${data.tokan}");
-      await prefs.setString("Token", data.tokan);
-      var url = prefs.getString("Token");
-            debugPrint("token from phne Memory $url");
-
-
-    }
+    // Future<void> saveToken(String pin) async {
+    //   final prefs = await SharedPreferences.getInstance();
+    //   debugPrint("token from share prefrnce function ${data.tokan}");
+    //   await prefs.setString("Token", data.tokan);
+    //   var url = prefs.getString("Token");
+    //   debugPrint("token from phne Memory $url");
+    // }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -150,17 +147,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
                 const SizedBox(height: 10.0),
                 NextButton(
-                  onTap: () async{
+                  onTap: () async {
                     Map<String, dynamic> requestData = {
                       "mobile_no": data.mobileNo,
                       "pin": pin,
                     };
-                 await   data.pinVerfication(
+                    await data.pinVerfication(
                       context: context,
                       requestData: requestData,
                     );
                     if (data.tokan.isNotEmpty) {
-                      saveToken(data.tokan);
+                      if (!context.mounted) return;
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

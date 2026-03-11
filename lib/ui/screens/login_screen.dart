@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:school_erp/controlar/Auth_provider.dart';
+import 'package:school_erp/controlar/auth_provider.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
 
 class LoginScrenn extends StatefulWidget {
@@ -20,7 +20,6 @@ class _LoginScrennState extends State<LoginScrenn> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<AuthProvider>(context, listen: false);
-    print("here is number${data.mobileNo}");
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(

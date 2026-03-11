@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,12 +11,13 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      // "route": CalanderScreen(),
+      //   "route": CalanderScreen(),
     },
     {
       "color": Color(0xffddf9d8),
       "image": "assets/image/fess.png",
       "lable": "Fees",
+
       // "route": FessPaymentScreen(),
     },
     {
@@ -187,8 +189,13 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onDoubleTap: () {
-                     removeToken();
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CalanderScreen(),
+                        ),
+                      );
                     },
                     // onTap: () {
                     //   Navigator.push(

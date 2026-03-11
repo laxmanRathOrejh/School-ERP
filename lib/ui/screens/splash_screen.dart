@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/dashboard_screen.dart';
-import 'package:school_erp/ui/screens/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:school_erp/controlar/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,37 +13,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthProvider>().chekToken(context: context);
+    });
 
-    chekToken();
-    // Timer(const Duration(seconds: 2), () {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => LoginScrenn()),
-    //   );
-    // });
-  }
-
-  void chekToken() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    String? token = prefs.getString("Token");
-    debugPrint("this is token from memory$token");
-    Timer(const Duration(seconds: 2), () {
-      if ( token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
-      }
-    else{
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScrenn()),
-        );
-
-    }}
-    
-    );
   }
 
   @override

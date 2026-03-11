@@ -5,19 +5,24 @@ import 'package:http/http.dart' as http;
 import 'package:school_erp/service/api_endpoint.dart';
 
 class ApiCall {
-  static Future<void> getRequest({required String endPoint}) async {
+  ///Get Function//
+  static Future<dynamic> getRequest({required String endPoint}) async {
     try {
       String APIUrl = "${ApiEndpoint.serverURL}$endPoint";
       debugPrint("API server url data = $APIUrl");
-      var response = await http.get(Uri.parse(endPoint));
+      var response = await http.get(Uri.parse(APIUrl));
 
+      debugPrint("here is acuular RESPONSE ${response.body}");
       if (response.statusCode == 200) {
-        var userData = jsonDecode(response.body);
-
-        debugPrint(userData);
+        return response.body;
+      } else if (response.statusCode == 400) {
+        return response.body;
+      } else {
+        return response.body;
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("here is erro from get Methad $e");
+    
     }
   }
 

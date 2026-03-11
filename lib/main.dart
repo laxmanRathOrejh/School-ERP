@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:school_erp/controlar/Auth_provider.dart';
+import 'package:school_erp/controlar/auth_provider.dart';
+import 'package:school_erp/controlar/calendar_provider.dart';
 import 'package:school_erp/ui/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CalendarProvider()),
+      ],
       child: MyApp(),
     ),
   );

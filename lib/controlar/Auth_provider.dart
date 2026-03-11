@@ -1,20 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:school_erp/service/api_call.dart';
 import 'package:school_erp/service/api_endpoint.dart';
+import 'package:school_erp/ui/screens/create_pin_screen.dart';
+import 'package:school_erp/ui/screens/dashboard_screen.dart';
+import 'package:school_erp/ui/screens/login_screen.dart';
 import 'package:school_erp/ui/screens/verification_screen.dart';
 import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
 import 'package:school_erp/ui/widgets/dialog/message_dialog.dart';
+import 'package:school_erp/utils/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   String mobileNo = "";
-  String tokan = "";
+  String tokan =    "";
+  
 
   Future<void> login({
     required Map<String, dynamic> requestData,
     required BuildContext context,
   }) async {
-    showAlertBox(context);
+    showAlertBox(context: context);
 
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.login,
@@ -30,7 +37,6 @@ class AuthProvider extends ChangeNotifier {
 
     if (data["status"] == 200) {
       mobileNo = data["mobile_no"];
-      //notifyListeners();
       if (data["is_pin"] == true) {
         Navigator.push(
           context,
@@ -38,8 +44,12 @@ class AuthProvider extends ChangeNotifier {
         );
       } else if (data["is_pin"] == false) {
         ///////////
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CreatePinScreen()),
+        );
+
         ///Navigator to Create pin screen
-        ///
       } else {
         showMessageBox(context: context, text: data["error"]);
       }
@@ -52,11 +62,12 @@ class AuthProvider extends ChangeNotifier {
     debugPrint(requestData.toString());
   }
 
+  // Cheak PIN
   Future<void> pinVerfication({
     required BuildContext context,
     required Map<String, dynamic> requestData,
   }) async {
-    showAlertBox(context);
+    showAlertBox(context: context);
 
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.verifiy,
@@ -68,19 +79,42 @@ class AuthProvider extends ChangeNotifier {
     hideLoader(context);
     if (data["status"] == 200) {
       tokan = data["token"];
+      saveToken(tokan);
       debugPrint("here we see token in provider $tokan");
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => DashboardScreen()),
-      // );
-      ///
-      ///
-      ///Navigate to dashbord
-    } else if (data["status"] == 400) {
+    } else if (data["status"] == 40) {
       showMessageBox(context: context, text: data["error"]);
     } else {
       showMessageBox(context: context, text: data.toString());
     }
   }
-  
+
+  //SAVE TOKEN IN LOCAL MEMORMRY
+  Future<void> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    debugPrint("token from share prefrnce function $tokan");
+    await prefs.setString(authToken, tokan);
+    var url = prefs.getString("Token");
+    debugPrint("token from phne Memory $url");
+  }
+
+  //ChekToken for Screen 
+  void chekToken({required BuildContext context}) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString(authToken);
+    debugPrint("this is token from memory$token");
+    Timer(const Duration(seconds: 2), () {
+      if (token != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScrenn()),
+        );
+      }
+    });
+  }
 }

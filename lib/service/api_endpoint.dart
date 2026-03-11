@@ -8,4 +8,5 @@ class ApiEndpoint {
 
   static String login = "login";
   static String verifiy = "verify-pin";
+  static String calender = "calendar";
 }
