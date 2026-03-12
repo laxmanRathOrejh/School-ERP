@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:school_erp/service/api_call.dart';
 import 'package:school_erp/service/api_endpoint.dart';
@@ -8,20 +7,20 @@ class CalendarProvider extends ChangeNotifier {
   Map<String, dynamic> allEvent = {};
   void getCalendardata({required BuildContext context}) async {
     showAlertBox(context: context);
-    var data = await ApiCall.getRequest(endPoint: ApiEndpoint.calender);
-    Map<String, dynamic> calenderData = jsonDecode(data);
+    var eventdata = await ApiCall.getRequest(endPoint: ApiEndpoint.calender);
+   // Map<String, dynamic> calenderData = jsonDecode(data);
 
-    debugPrint("here is calender data $calenderData");
+   // debugPrint("here is calender data $calenderData");
 
-    if (calenderData["status"] == 200) {
-      debugPrint("type of data${calenderData.runtimeType}");
-      allEvent = calenderData;
+    if (eventdata["status"] == 200) {
+   //   debugPrint("type of data${calenderData.runtimeType}");
+      allEvent = eventdata;
       notifyListeners();
       debugPrint(allEvent.toString());
-    } else if (calenderData["status"] == 400) {
-      debugPrint(calenderData["message"]);
+    } else if (eventdata["status"] == 400) {
+      debugPrint(eventdata["message"]);
     } else {
-      debugPrint(calenderData.toString());
+      debugPrint(eventdata.toString());
     }
 
     if (!context.mounted) return;

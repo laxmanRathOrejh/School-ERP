@@ -14,11 +14,11 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   String pin = "";
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<AuthProvider>(context, listen: false);
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -46,7 +46,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(1),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,42 +86,43 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 const SizedBox(height: 5.0),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: MaterialPinField(
-                         
-                        onChanged: (value) {
-                          setState(() {
-                            pin = value;
-                          });
-                        },
-                        length: 4,
-                        
-                        onCompleted: (value) {
-                          setState(() {
-                            pin = value;
-                          });
-                        },
-                        
-                        obscureText: true,
-                        theme: MaterialPinTheme(
-                          shape: MaterialPinShape.outlined,
-                          focusedBorderColor: Colors.blue,
-                          focusedFillColor: Color(0xFFF6F3F3),
-                          fillColor: Color(0xFFF6F3F3),
-                          filledFillColor: Color(0xFFF6F3F3),
-                          cellSize: Size(80, 48),
-                          borderRadius: BorderRadius.circular(12),
-                          spacing: 11,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: MaterialPinField(
+                          onChanged: (value) {
+                            setState(() {
+                              pin = value;
+                            });
+                          },
+                          length: 4,
+
+                          onCompleted: (value) {
+                            setState(() {
+                              pin = value;
+                            });
+                          },
+
+                          obscureText: true,
+                          theme: MaterialPinTheme(
+                            shape: MaterialPinShape.outlined,
+                            focusedBorderColor: Colors.blue,
+                            focusedFillColor: Color(0xFFF6F3F3),
+                            fillColor: Color(0xFFF6F3F3),
+                            filledFillColor: Color(0xFFF6F3F3),
+                            cellSize: Size(80, 48),
+                            borderRadius: BorderRadius.circular(12),
+                            spacing: 4,
+                          ),
+                          mainAxisAlignment: MainAxisAlignment.center,
                         ),
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
                 /////////

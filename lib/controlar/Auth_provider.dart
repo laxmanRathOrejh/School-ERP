@@ -30,7 +30,6 @@ class AuthProvider extends ChangeNotifier {
     if (!context.mounted) return;
 
     hideLoader(context);
-
     if (data["status"] == 200) {
       mobileNo = data["mobile_no"];
       if (data["is_pin"] == true) {
@@ -67,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
     if (data["status"] == 200) {
       tokanFromServer = data["token"];
       saveToken(tokanFromServer);
-      context.go("/dashbord/screen");
+      context.go("/home/Screen");
       debugPrint("here we see token in provider $tokanFromServer");
     } else if (data["status"] == 400) {
       showMessageBox(context: context, text: data["error"]);
@@ -93,7 +92,7 @@ class AuthProvider extends ChangeNotifier {
     debugPrint("this is token from memory$token");
     Timer(const Duration(seconds: 2), () {
       if (token != null) {
-        context.go("/dashbord/screen");
+        context.go("/home/Screen");
       } else {
         context.go("/login/Screen");
       }

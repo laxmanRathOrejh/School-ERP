@@ -22,13 +22,11 @@ class ApiCall {
 
       String APIUrl = "${ApiEndpoint.serverURL}$endPoint";
       debugPrint("API server url data = $APIUrl");
-      var response = await http.get(Uri.parse(APIUrl),
-    headers: appHeader,
-      );
+      var response = await http.get(Uri.parse(APIUrl), headers: appHeader);
 
       debugPrint("here is acuular RESPONSE ${response.body}");
       if (response.statusCode == 200) {
-        return response.body;
+        return jsonDecode(response.body);
       } else if (response.statusCode == 400) {
         return response.body;
       } else {
@@ -36,6 +34,7 @@ class ApiCall {
       }
     } catch (e) {
       debugPrint("here is erro from get Methad $e");
+      rethrow;
     }
   }
 
@@ -57,7 +56,7 @@ class ApiCall {
       );
       debugPrint("APi Response = ${response.body}");
       if (response.statusCode == 200) {
-        return response.body;
+        return jsonDecode(response.body);
       } else if (response.statusCode == 400) {
         return response.body;
       } else {

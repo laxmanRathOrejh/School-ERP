@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/calendar_provider.dart';
-import 'package:school_erp/ui/widgets/appbar_widget.dart';
+import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalanderScreen extends StatefulWidget {
@@ -28,17 +28,18 @@ class _CalanderScreenState extends State<CalanderScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+    _selectedDay = DateTime.now();
   }
 
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  DateTime? _selectedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<CalendarProvider>(context, listen: false);
     final selectedEvents = data.getEventsForDay(_selectedDay ?? DateTime.now());
     return Scaffold(
-      appBar: AppbarWidget(titleText: "Calendar"),
+      appBar: AppbarWithBackWidget(titleText: "Calendar"),
       body: SafeArea(
         child: ListView(
           children: [
@@ -117,78 +118,85 @@ class _CalanderScreenState extends State<CalanderScreen>
                               ],
                             ),
                             SizedBox(height: 20),
-                            ListView.builder(
-                              shrinkWrap: true,
+                            Consumer<CalendarProvider>(
+                              builder: (context, value, child) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
 
-                              itemCount: selectedEvents.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ListView(
-                                      //  physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                selectedEvents[index]["type"] ==
-                                                    "exam"
-                                                ? Color(0xFFA5D2AB)
-                                                : Color(0xFF94BDD7),
-                                            // color: Color(0xFFA5D2AB),
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
+                                  itemCount: selectedEvents.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
                                           ),
-                                          child: Row(
-                                            textBaseline:
-                                                TextBaseline.alphabetic,
-                                            children: [
-                                              SizedBox(width: 20),
-                                              Icon(
-                                                Icons.sunny,
+                                        ),
+                                        child: ListView(
+                                          //  physics: NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              decoration: BoxDecoration(
                                                 color:
                                                     selectedEvents[index]["type"] ==
                                                         "exam"
-                                                    ? Color(0xFF1F972F)
-                                                    : Color(0xFF1985C9),
-                                                size: 25,
+                                                    ? Color(0xFFA5D2AB)
+                                                    : Color(0xFF94BDD7),
+                                                // color: Color(0xFFA5D2AB),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
-                                              SizedBox(width: 20),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 5,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      selectedEvents[index]["eventTitle"],
-                                                    ),
-                                                    Text(
-                                                      selectedEvents[index]["sub_title"],
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Color(
-                                                          0xFF717374,
+                                              child: Row(
+                                                textBaseline:
+                                                    TextBaseline.alphabetic,
+                                                children: [
+                                                  SizedBox(width: 20),
+                                                  Icon(
+                                                    Icons.sunny,
+                                                    color:
+                                                        selectedEvents[index]["type"] ==
+                                                            "exam"
+                                                        ? Color(0xFF1F972F)
+                                                        : Color(0xFF1985C9),
+                                                    size: 25,
+                                                  ),
+                                                  SizedBox(width: 20),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          top: 5,
                                                         ),
-                                                      ),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          selectedEvents[index]["eventTitle"],
+                                                        ),
+                                                        Text(
+                                                          selectedEvents[index]["sub_title"],
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Color(
+                                                              0xFF717374,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                             ),

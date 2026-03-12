@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:school_erp/ui/screens/attendance_screen.dart';
+import 'package:school_erp/ui/screens/calendar_screen.dart';
+import 'package:school_erp/ui/screens/contact_screen.dart';
+import 'package:school_erp/ui/screens/curriculum_screen.dart';
+import 'package:school_erp/ui/screens/fess_history_screen.dart';
+import 'package:school_erp/ui/screens/fess_payment_screen.dart';
+import 'package:school_erp/ui/screens/parent_detail_screen.dart';
+import 'package:school_erp/ui/screens/pt_chat_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,56 +19,56 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      //   "route": CalanderScreen(),
+      "route": CalanderScreen(),
     },
     {
       "color": Color(0xffddf9d8),
       "image": "assets/image/fess.png",
       "lable": "Fees",
 
-      // "route": FessPaymentScreen(),
+      "route": FessPaymentScreen(),
     },
     {
       "color": Color(0xffd2e7fa),
       "image": "assets/image/grops.png",
       "lable": "Groups",
-      // "route": PtChatsScreen(fromBottomNav: false),
+      "route": PtChatsScreen(fromBottomNav: false),
     },
     {
       "color": Color(0xffd9f4ff),
       "image": "assets/image/parents.png",
       "lable": "Parents",
-      // "route": ParentScreen(),
+      "route": ParentScreen(),
     },
     {
       "color": Color(0xfffbf1d3),
       "image": "assets/image/cantact.png",
       "lable": "Contact",
-      // "route": ContactScreen(),
+      "route": ContactScreen(),
     },
     {
       "color": Color(0xfffce1e5),
       "image": "assets/image/curriculum.png",
       "lable": "Curriculum",
-      //  "route": CurriculumScreen(fromBottomNav: false),
+      "route": CurriculumScreen(fromBottomNav: false),
     },
     {
       "color": Color(0xfff0f0f0),
       "image": "assets/image/timetable.png",
       "lable": "TimeTable",
-      //  "route": FessPaymentScreen(),
+      "route": FessPaymentScreen(),
     },
     {
       "color": Color(0xffd9f4ff),
       "image": "assets/image/fesshistry.png",
       "lable": "Fess History",
-      //  "route": FissHistoryScreem(),
+      "route": FissHistoryScreem(),
     },
     {
       "color": Color(0xffe0e3f3),
       "image": "assets/image/attendance.png",
       "lable": "Attendance",
-      //  "route": AttendanceCalendar(),
+      "route": AttendanceCalendar(),
     },
   ];
   void removeToken() async {
@@ -191,7 +198,12 @@ class DashboardScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                       context.push("/calendar/Screen");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => dashbordItam[index]["route"],
+                        ),
+                      );
                     },
 
                     child: Column(

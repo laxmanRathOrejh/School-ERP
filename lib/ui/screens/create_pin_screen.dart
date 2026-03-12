@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 
 class CreatePinScreen extends StatefulWidget {
   const CreatePinScreen({super.key});
@@ -35,28 +36,7 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
     // var providerData = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        shadowColor: const Color(0xFFF8F8F8),
-        backgroundColor: const Color(0xFFFBFBFB),
-        elevation: 2,
-        leadingWidth: 45,
-        scrolledUnderElevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: CircleAvatar(
-            backgroundColor: const Color(0xFFECECEC),
-            radius: 15,
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 15),
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: Text("Create New Pin", style: TextStyle(fontSize: 18)),
-      ),
+      appBar: AppbarWithBackWidget(titleText: "Create New Pin"),
       body: SafeArea(
         child: Form(
           child: Padding(
