@@ -10,4 +10,6 @@ class ApiEndpoint {
   static String verifiy = "verify-pin";
   static String calender = "calendar";
   static String parentsDetails = "parent-details";
+  static String teacherList = "get-all-teachers-chat";
+  static String teacherChatHistory = "get-teacher-chats";
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-void showAlertBox({required BuildContext context}) {
+void loadingBox({required BuildContext context}) {
   showDialog(
     context: context,
     barrierDismissible: false,

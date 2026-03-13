@@ -47,20 +47,28 @@ class ApiCall {
     try {
       String apiUrl = "${ApiEndpoint.serverURL}$endPoint";
       debugPrint("POST API server url data = $apiUrl");
+      final prefs = await SharedPreferences.getInstance();
+
+      String? token = prefs.getString(authToken);
+
       debugPrint("request data = ${json.encode(requestData)}");
+      Map<String, String> appHeader = {"Content-Type": "application/json"};
+      if (token != null) {
+        appHeader["Authorization"] = "Bearer $token";
+      }
 
       var response = await http.post(
         Uri.parse(apiUrl),
         body: json.encode(requestData),
-        headers: {"Content-Type": "application/json"},
+        headers: appHeader,
       );
       debugPrint("APi Response = ${response.body}");
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else if (response.statusCode == 400) {
-        return response.body;
+        return jsonDecode(response.body);
       } else {
-        return response.body;
+        return jsonDecode(response.body);
       }
     } catch (e) {
       debugPrint("here is error $e");

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:school_erp/controlar/auth_provider.dart';
 import 'package:school_erp/controlar/calendar_provider.dart';
+import 'package:school_erp/controlar/chat_provider.dart';
 import 'package:school_erp/controlar/parents_provider.dart';
+import 'package:school_erp/controlar/teacher_list_provider.dart';
 import 'package:school_erp/routes/router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,8 @@ void main() {
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CalendarProvider()),
         ChangeNotifierProvider(create: (c) => ParentsProvider()),
+        ChangeNotifierProvider(create: (a) => TeacherListProvider()),
+        ChangeNotifierProvider(create: (d) => ChatDataProvider()),
       ],
       child: MyApp(),
     ),

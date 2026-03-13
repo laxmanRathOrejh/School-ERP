@@ -17,7 +17,7 @@ class AuthProvider extends ChangeNotifier {
     required Map<String, dynamic> requestData,
     required BuildContext context,
   }) async {
-    showAlertBox(context: context);
+    loadingBox(context: context);
 
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.login,
@@ -53,7 +53,7 @@ class AuthProvider extends ChangeNotifier {
     required BuildContext context,
     required Map<String, dynamic> requestData,
   }) async {
-    showAlertBox(context: context);
+    loadingBox(context: context);
 
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.verifiy,

@@ -8,14 +8,15 @@ class ParentsProvider extends ChangeNotifier {
   Student? parentsDetails;
 
   Future<void> parentDetails({required BuildContext context}) async {
-    showAlertBox(context: context);
+    loadingBox(context: context);
 
     var response = await ApiCall.getRequest(
       endPoint: ApiEndpoint.parentsDetails,
     );
     debugPrint("Respoponse from get api Parents details $response");
     if (response["status"] == 200) {
-      parentsDetails = APIResponse.formjson(response).student;
+      final fromjson = APIResponse.formjson(response);
+      parentsDetails = fromjson.student;
       notifyListeners();
     } else if (response["status"] == 400) {
     } else {}
@@ -24,4 +25,6 @@ class ParentsProvider extends ChangeNotifier {
     hideLoader(context);
     // print("here is model ${apiResponse.student?.fatherQuali}");
   }
+
+  
 }

@@ -7,6 +7,7 @@ import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
+import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +27,7 @@ class DashboardScreen extends StatelessWidget {
       "image": "assets/image/fess.png",
       "lable": "Fees",
 
-      "route": FessPaymentScreen(),
+      "route": TryFucuterBilder(),
     },
     {
       "color": Color(0xffd2e7fa),

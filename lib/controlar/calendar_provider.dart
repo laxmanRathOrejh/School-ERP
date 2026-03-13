@@ -6,7 +6,7 @@ import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
 class CalendarProvider extends ChangeNotifier {
   Map<String, dynamic> allEvent = {};
   void getCalendardata({required BuildContext context}) async {
-    showAlertBox(context: context);
+    loadingBox(context: context);
     var eventdata = await ApiCall.getRequest(endPoint: ApiEndpoint.calender);
    // Map<String, dynamic> calenderData = jsonDecode(data);
 
