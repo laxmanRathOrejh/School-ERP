@@ -6,10 +6,8 @@ import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
 
 class ParentsProvider extends ChangeNotifier {
   Student? parentsDetails;
-
   Future<void> parentDetails({required BuildContext context}) async {
     loadingBox(context: context);
-
     var response = await ApiCall.getRequest(
       endPoint: ApiEndpoint.parentsDetails,
     );
@@ -21,10 +19,6 @@ class ParentsProvider extends ChangeNotifier {
     } else if (response["status"] == 400) {
     } else {}
     if (!context.mounted) return;
-
     hideLoader(context);
-    // print("here is model ${apiResponse.student?.fatherQuali}");
   }
-
-  
 }

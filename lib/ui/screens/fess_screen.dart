@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class FessScreen extends StatefulWidget {
   final bool fromBottomNav;
@@ -15,6 +15,14 @@ class FessScreen extends StatefulWidget {
 
 class _FessScreenState extends State<FessScreen> {
   String? selectedClass;
+  late List<MultiSelectItem<String>> itamData = [];
+  List<String> dataa = ["apple", "banana", "mango", "orange", "pineapple"];
+
+  @override
+  void initState() {
+    super.initState();
+    itamData = dataa.map((e) => MultiSelectItem(e, e)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +76,6 @@ class _FessScreenState extends State<FessScreen> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Color(0xffffffff),
-
                       contentPadding: EdgeInsets.symmetric(horizontal: 15),
                       hintText: "Session Select",
                       hintStyle: TextStyle(
@@ -108,7 +115,25 @@ class _FessScreenState extends State<FessScreen> {
 
                 Padding(
                   padding: const EdgeInsets.all(20),
-                  child: NextButton(onTap: () {}, text: "Continue"),
+                  child: NextButton(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return MultiSelectDialogField(
+                            items: itamData,
+
+                            title: Text("Select Fruits"),
+                            buttonText: Text("Fruits"),
+                            onConfirm: (values) {
+                              debugPrint("data from Multi Dilog fild $values");
+                            },
+                          );
+                        },
+                      );
+                    },
+                    text: "Continue",
+                  ),
                 ),
               ],
             ),

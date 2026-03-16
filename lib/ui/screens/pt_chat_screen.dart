@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/teacher_list_provider.dart';
-import 'package:school_erp/ui/screens/chat_screen.dart';
+import 'package:school_erp/ui/screens/chat_screen2.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 
@@ -77,7 +77,7 @@ class _PtChatsScreenState extends State<PtChatsScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
+                                  builder: (context) => ChatScreen2(
                                     name: value
                                         .teacherList
                                         ?.teacherData?[index]

@@ -5,11 +5,16 @@ import 'package:school_erp/service/api_endpoint.dart';
 import 'package:school_erp/ui/widgets/dialog/loding_dialog.dart';
 
 class ChatDataProvider extends ChangeNotifier {
-  TeacherChatMadel? chatMadel;
+  TeacherChatMadel? chatModel;
+
+  final ScrollController scrollController = ScrollController();
+
   Future<void> getChatHistory({
     required BuildContext context,
     required Map<String, dynamic> teacherId,
   }) async {
+    chatModel = null;
+    notifyListeners();
     loadingBox(context: context);
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.teacherChatHistory,
@@ -17,7 +22,17 @@ class ChatDataProvider extends ChangeNotifier {
     );
     if (response["status"] == 200) {
       debugPrint("here is respnse of CHAT$response");
-      chatMadel = TeacherChatMadel.fromJson(response);
+      chatModel = TeacherChatMadel.fromJson(response);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.linear,
+          );
+        }
+      });
       notifyListeners();
     } else if (response["status"] == 400) {
       debugPrint("data not found $response");

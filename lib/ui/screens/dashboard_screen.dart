@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/attendance_screen.dart';
 import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/screens/fess_payment_screen.dart';
+import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
 import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
@@ -69,7 +69,7 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffe0e3f3),
       "image": "assets/image/attendance.png",
       "lable": "Attendance",
-      "route": AttendanceCalendar(),
+      "route": MultiSelectExample(),
     },
   ];
   void removeToken() async {
@@ -80,6 +80,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Screen Rebuild");
     return Scaffold(
       appBar: AppbarWidget(titleText: "Dashboard"),
       body: ListView(

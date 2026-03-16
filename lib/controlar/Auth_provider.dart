@@ -28,7 +28,6 @@ class AuthProvider extends ChangeNotifier {
       "This is response from Api Which we see in Provider${data["status"]}",
     );
     if (!context.mounted) return;
-
     hideLoader(context);
     if (data["status"] == 200) {
       mobileNo = data["mobile_no"];

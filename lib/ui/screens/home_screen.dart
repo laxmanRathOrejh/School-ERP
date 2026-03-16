@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/dashboard_screen.dart';
@@ -7,7 +6,7 @@ import 'package:school_erp/ui/screens/profil_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
- const HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _Dashbard1State();
@@ -83,6 +82,16 @@ class _Dashbard1State extends State<HomeScreen> {
           ),
         ),
       ),
+      // drawer: Column(
+      //   children: [
+      //     Text("data"),
+      //     Text("data"),
+      //     Text("data"),
+      //     Text("data"),
+      //     Text("data"),
+      //     Text("data"),
+      //   ],
+      // ),
     );
   }
 }

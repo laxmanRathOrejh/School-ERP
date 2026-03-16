@@ -160,15 +160,15 @@ class _ChatScreenState extends State<ChatScreen> {
               ListView.builder(
                 padding: EdgeInsets.only(top: 30, bottom: 80),
                 //length of message
-                itemCount: value.chatMadel?.chatData?.length ?? 0,
+                itemCount: value.chatModel?.chatData?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(
                       bottom: 20,
-                      right: value.chatMadel?.chatData?[index].chatStatus == 0
+                      right: value.chatModel?.chatData?[index].chatStatus == 0
                           ? 10
                           : 50,
-                      left: value.chatMadel?.chatData?[index].chatStatus == 0
+                      left: value.chatModel?.chatData?[index].chatStatus == 0
                           ? 50
                           : 10,
                     ),
@@ -176,7 +176,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       mainAxisSize: MainAxisSize.min,
                       textBaseline: TextBaseline.alphabetic,
                       mainAxisAlignment:
-                          value.chatMadel?.chatData?[index].chatStatus == 0
+                          value.chatModel?.chatData?[index].chatStatus == 0
                           ? MainAxisAlignment.end
                           : MainAxisAlignment.start,
                       children: [
@@ -187,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           decoration: BoxDecoration(
                             color:
-                                value.chatMadel?.chatData?[index].chatStatus ==
+                                value.chatModel?.chatData?[index].chatStatus ==
                                     0
                                 ? Color(0xfff3f3f3)
                                 : Color(0xFF337ce2),
@@ -201,13 +201,13 @@ class _ChatScreenState extends State<ChatScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  value.chatMadel?.chatData?[index].message ??
+                                  value.chatModel?.chatData?[index].message ??
                                       "",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color:
                                         value
-                                                .chatMadel
+                                                .chatModel
                                                 ?.chatData?[index]
                                                 .chatStatus ==
                                             0
@@ -228,7 +228,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                       right: 4,
                                     ),
                                     child: Text(
-                                      value.chatMadel?.chatData?[index].time ??
+                                      value.chatModel?.chatData?[index].time ??
                                           "",
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
@@ -236,7 +236,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         fontWeight: FontWeight.w500,
                                         color:
                                             value
-                                                    .chatMadel
+                                                    .chatModel
                                                     ?.chatData?[index]
                                                     .chatStatus ==
                                                 0
