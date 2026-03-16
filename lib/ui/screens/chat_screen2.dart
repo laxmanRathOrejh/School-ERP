@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/chat_provider.dart';
 
-
 class ChatScreen2 extends StatefulWidget {
   final Map<String, dynamic>? teacherid;
   final String? name;
@@ -410,7 +409,7 @@ class _ChatScreen2State extends State<ChatScreen2> {
           ///
           ///
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
             child: TextFormField(
               //  controller: messageController,
               minLines: 1,

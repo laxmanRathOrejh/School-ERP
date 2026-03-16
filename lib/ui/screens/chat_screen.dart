@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/chat_provider.dart';
+import 'package:school_erp/controlar/local_list_update.dart';
 
 class ChatScreen extends StatefulWidget {
   final Map<String, dynamic>? teacherid;
@@ -14,76 +15,28 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  // List<Map<String, dynamic>> chatList = [
-  //   {
-  //     "id": 1,
-  //     "time": "10:45",
-  //     "message": "Good morning, Rohan. Why were you absent yesterday?",
-  //     "fromUser": false,
-  //   },
-  //   {
-  //     "id": 2,
-  //     "time": "10:47",
-  //     "message":
-  //         "Good morning, maam. I had a fever, so I couldnt come to school.",
-  //     "fromUser": true,
-  //   },
-  //   {
-  //     "id": 3,
-  //     "time": "10:48",
-
-  //     "message": "I hope youre feeling better now?",
-  //     "fromUser": false,
-  //   },
-  //   {
-  //     "id": 4,
-  //     "time": "10:49",
-
-  //     "message": "Yes ma'am, I'm better today",
-  //     "fromUser": true,
-  //   },
-  //   {
-  //     "id": 5,
-  //     "time": "10:50",
-  //     "message":
-  //         "That's good. Please make sure you complete the notes from yesterday's class",
-  //     "fromUser": false,
-  //   },
-  //   {
-  //     "id": 6,
-  //     "time": "10:51",
-  //     "message":
-  //         "Yes ma'am. I'll take the notes from my friend and finish the homework.",
-  //     "fromUser": true,
-  //   },
-  //   {
-  //     "id": 7,
-  //     "time": "10:52",
-  //     "message": "Very good. Let me know if you have any doubts",
-  //     "fromUser": false,
-  //   },
-  //   {
-  //     "id": 8,
-  //     "time": "10:53",
-  //     "message": "Thank you, ma'am.",
-  //     "fromUser": true,
-  //   },
-  // ];
   TextEditingController messageController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {});
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ChatDataProvider>().getChatHistory(
-        context: context,
-        teacherId: widget.teacherid ?? {},
-      );
+      context.read<LocalListUpdate>().chatHistory;
+      // context.read<ChatDataProvider>().getChatHistory(
+      //   context: context,
+      //   teacherId: widget.teacherid ?? {},
+      // );
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var localListProvider = Provider.of<LocalListUpdate>(
+      context,
+      listen: false,
+    );
+
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
@@ -110,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 SizedBox(width: 10),
 
-                Consumer<ChatDataProvider>(
+                Consumer<LocalListUpdate>(
                   builder: (context, value, child) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,30 +106,30 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
-      body: Consumer<ChatDataProvider>(
+      body: Consumer<LocalListUpdate>(
         builder: (context, value, child) {
           return Stack(
             children: [
               ListView.builder(
                 padding: EdgeInsets.only(top: 30, bottom: 80),
                 //length of message
-                itemCount: value.chatModel?.chatData?.length ?? 0,
+                itemCount: value.chatHistory.length,
                 itemBuilder: (context, index) {
+                  bool isStudent = value.chatHistory[index]["status"] == 0;
                   return Padding(
                     padding: EdgeInsets.only(
                       bottom: 20,
-                      right: value.chatModel?.chatData?[index].chatStatus == 0
-                          ? 10
-                          : 50,
-                      left: value.chatModel?.chatData?[index].chatStatus == 0
-                          ? 50
-                          : 10,
+                      // right: value.chatModel?.chatData?[index].chatStatus == 0
+                      //     ? 10
+                      //     : 50,
+                      // left: value.chatModel?.chatData?[index].chatStatus == 0
+                      //     ? 50
+                      //     : 10,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       textBaseline: TextBaseline.alphabetic,
-                      mainAxisAlignment:
-                          value.chatModel?.chatData?[index].chatStatus == 0
+                      mainAxisAlignment: isStudent
                           ? MainAxisAlignment.end
                           : MainAxisAlignment.start,
                       children: [
@@ -186,9 +139,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             //  maxWidth: MediaQuery.of(context).size.width * 0.2,
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                value.chatModel?.chatData?[index].chatStatus ==
-                                    0
+                            color: isStudent
                                 ? Color(0xfff3f3f3)
                                 : Color(0xFF337ce2),
                             borderRadius: BorderRadius.circular(10),
@@ -201,16 +152,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  value.chatModel?.chatData?[index].message ??
-                                      "",
+                                  value.chatHistory[index]["message"] ?? "",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color:
-                                        value
-                                                .chatModel
-                                                ?.chatData?[index]
-                                                .chatStatus ==
-                                            0
+                                    color: isStudent
                                         ? Color(0xff000000)
                                         : Color(0xffffffff),
                                   ),
@@ -228,18 +173,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                       right: 4,
                                     ),
                                     child: Text(
-                                      value.chatModel?.chatData?[index].time ??
-                                          "",
+                                      value.chatHistory[index]["time"] ?? "",
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
-                                        color:
-                                            value
-                                                    .chatModel
-                                                    ?.chatData?[index]
-                                                    .chatStatus ==
-                                                0
+                                        color: isStudent
                                             ? Color(0xff000000)
                                             : Color(0xFFF8F9FA),
                                       ),
@@ -283,6 +222,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       hintText: "Message",
                       suffixIcon: IconButton(
                         onPressed: () {
+                          localListProvider.addNewChat(
+                            message: messageController.text,
+                          );
                           messageController.clear();
                         },
                         icon: Icon(Icons.send, color: Color(0xFF337ce2)),

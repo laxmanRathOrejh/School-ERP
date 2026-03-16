@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/screens/calendar_screen.dart';
+import 'package:school_erp/ui/screens/chat_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
@@ -20,7 +21,8 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      "route": CalanderScreen(),
+      "route": ChatScreen()
+      //CalanderScreen(),
     },
     {
       "color": Color(0xffddf9d8),
