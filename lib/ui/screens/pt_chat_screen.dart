@@ -5,6 +5,7 @@ import 'package:school_erp/controlar/teacher_list_provider.dart';
 import 'package:school_erp/ui/screens/chat_screen2.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
+import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
 class PtChatsScreen extends StatefulWidget {
   final bool fromBottomNav;
@@ -86,7 +87,7 @@ class _PtChatsScreenState extends State<PtChatsScreen> {
                                         .teacherList
                                         ?.teacherData?[index]
                                         .profilPic,
-                                    teacherid: {"teacher_id": teacherId},
+                                    teacherid: teacherId,
                                   ),
                                 ),
                               );
@@ -112,41 +113,58 @@ class _PtChatsScreenState extends State<PtChatsScreen> {
                                                 ?.teacherData?[index]
                                                 .profilPic !=
                                             null
-                                        ? CircleAvatar(
-                                            backgroundColor: Color(0xFF0515F5),
-                                            radius: 30,
+                                        ? InkWell(
+                                            onTap: () {
+                                              showImageDialog(
+                                                context: context,
+                                                imagePath:
+                                                    value
+                                                        .teacherList
+                                                        ?.teacherData?[index]
+                                                        .profilPic ??
+                                                    "",
+                                                isAssetskImage: false,
+                                              );
+                                            },
                                             child: CircleAvatar(
-                                              radius: 28,
                                               backgroundColor: Color(
-                                                0xffbababa,
+                                                0xFF0515F5,
                                               ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 7,
+                                              radius: 30,
+                                              child: CircleAvatar(
+                                                radius: 28,
+                                                backgroundColor: Color(
+                                                  0xffbababa,
                                                 ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadiusGeometry.circular(
-                                                        22,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 7,
                                                       ),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        value
-                                                            .teacherList
-                                                            ?.teacherData?[index]
-                                                            .profilPic ??
-                                                        "",
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadiusGeometry.circular(
+                                                          22,
+                                                        ),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          value
+                                                              .teacherList
+                                                              ?.teacherData?[index]
+                                                              .profilPic ??
+                                                          "",
+                                                    ),
                                                   ),
+                                                  // child: ClipRRect(
+                                                  //   borderRadius:
+                                                  //       BorderRadiusGeometry.circular(20),
+                                                  //   child: Icon(
+                                                  //     Icons.person,
+                                                  //     size: 58,
+                                                  //     color: Color(0xffffffff),
+                                                  //   ),
+                                                  // ),
                                                 ),
-                                                // child: ClipRRect(
-                                                //   borderRadius:
-                                                //       BorderRadiusGeometry.circular(20),
-                                                //   child: Icon(
-                                                //     Icons.person,
-                                                //     size: 58,
-                                                //     color: Color(0xffffffff),
-                                                //   ),
-                                                // ),
                                               ),
                                             ),
                                           )

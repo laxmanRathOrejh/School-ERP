@@ -5,11 +5,14 @@ import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/screens/fess_payment_screen.dart';
+import 'package:school_erp/ui/screens/fess_screen.dart';
+import 'package:school_erp/ui/screens/for_pdf_show.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
 import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
+import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 import 'package:school_erp/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      "route": ChatScreen()
+      "route": ChatScreen(),
       //CalanderScreen(),
     },
     {
@@ -29,7 +32,7 @@ class DashboardScreen extends StatelessWidget {
       "image": "assets/image/fess.png",
       "lable": "Fees",
 
-      "route": TryFucuterBilder(),
+      "route": FessScreen(fromBottomNav: false),
     },
     {
       "color": Color(0xffd2e7fa),
@@ -53,7 +56,8 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xfffce1e5),
       "image": "assets/image/curriculum.png",
       "lable": "Curriculum",
-      "route": CurriculumScreen(fromBottomNav: false),
+      "route": ShowPdf(),
+      //CurriculumScreen(fromBottomNav: false),
     },
     {
       "color": Color(0xfff0f0f0),
@@ -125,17 +129,27 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
-                          child: CircleAvatar(
-                            backgroundColor: Color(0xffbababa),
-                            radius: 40,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadiusGeometry.circular(20),
-                                child: Image.asset(
-                                  "assets/image/user.png",
-                                  fit: BoxFit.cover,
-                                  scale: 2,
+                          child: InkWell(
+                            onTap: () {
+                              showImageDialog(
+                                context: context,
+                                imagePath: "assets/image/user.png",
+                              );
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Color(0xffbababa),
+                              radius: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(
+                                    20,
+                                  ),
+                                  child: Image.asset(
+                                    "assets/image/user.png",
+                                    fit: BoxFit.cover,
+                                    scale: 2,
+                                  ),
                                 ),
                               ),
                             ),

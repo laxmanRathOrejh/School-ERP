@@ -11,29 +11,28 @@ class ChatDataProvider extends ChangeNotifier {
 
   Future<void> getChatHistory({
     required BuildContext context,
-    required Map<String, dynamic> teacherId,
+    required int teacherId,
+    bool isloding = true,
   }) async {
-    chatModel = null;
+    if (isloding) {
+      chatModel = null;
+    }
     notifyListeners();
-    loadingBox(context: context);
+    if (isloding) {
+      loadingBox(context: context);
+    }
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.teacherChatHistory,
-      requestData: teacherId,
+      requestData: {"teacher_id": teacherId},
     );
     if (response["status"] == 200) {
       debugPrint("here is respnse of CHAT$response");
       chatModel = TeacherChatMadel.fromJson(response);
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (scrollController.hasClients) {
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: Duration(seconds: 1),
-            curve: Curves.linear,
-          );
-        }
-      });
       notifyListeners();
+      if (isloding) {
+        scrollToBottom();
+      }
     } else if (response["status"] == 400) {
       debugPrint("data not found $response");
     } else {
@@ -41,6 +40,59 @@ class ChatDataProvider extends ChangeNotifier {
     }
     if (!context.mounted) return;
 
-    hideLoader(context);
+    if (isloding) {
+      hideLoader(context);
+    }
+  }
+
+  void sendMessage({
+    required Map<String, dynamic> message,
+    required BuildContext context,
+  }) async {
+    var response = await ApiCall.postRequest(
+      endPoint: ApiEndpoint.sendMessage,
+      requestData: message,
+    );
+    if (response["status"] == 200) {
+      if (!context.mounted) return;
+
+      getChatHistory(
+        context: context,
+        teacherId: message["teacher_id"],
+        isloding: false,
+      );
+      //   ApiCall.postRequest(endPoint: ApiEndpoint.teacherChatHistory,requestData: message);
+      //   scrollToBottom();
+      notifyListeners();
+    } else if (response["status"] == 400) {
+      debugPrint("message not send sucessfully ${response["message"]}");
+    } else {
+      debugPrint("Here is meeage Api Responnse$response");
+    }
+  }
+
+  //
+  // WidgetsBinding.instance.addPostFrameCallback((_) {
+  //   if (scrollController.hasClients) {
+  //     scrollToBottom();
+  //     scrollController.animateTo(
+  //       scrollController.position.maxScrollExtent,
+  //       duration: Duration(seconds: 1),
+  //       curve: Curves.linear,
+  //     );
+  //   }
+  // });
+  //  }
+
+  void scrollToBottom() {
+    if (!scrollController.hasClients) return;
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.linear,
+      );
+    });
   }
 }

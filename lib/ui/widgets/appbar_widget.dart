@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;
@@ -25,9 +25,17 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
       ),
       actions: [
-        SizedBox(
-          height: 45,
-          child: Image.asset("assets/image/cbse2.png", fit: BoxFit.fill),
+        InkWell(
+          onTap: () {
+            showImageDialog(
+              context: context,
+              imagePath: "assets/image/cbse2.png",
+            );
+          },
+          child: SizedBox(
+            height: 45,
+            child: Image.asset("assets/image/cbse2.png", fit: BoxFit.fill),
+          ),
         ),
         SizedBox(width: 10),
       ],

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+// import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class FessScreen extends StatefulWidget {
   final bool fromBottomNav;
@@ -15,17 +17,21 @@ class FessScreen extends StatefulWidget {
 
 class _FessScreenState extends State<FessScreen> {
   String? selectedClass;
-  late List<MultiSelectItem<String>> itamData = [];
-  List<String> dataa = ["apple", "banana", "mango", "orange", "pineapple"];
+  // late List<MultiSelectItem<String>> itamData = [];
+  // List<String> dataa = ["apple", "banana", "mango", "orange", "pineapple"];
 
   @override
   void initState() {
     super.initState();
-    itamData = dataa.map((e) => MultiSelectItem(e, e)).toList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FessProvider>().getSession(context: context);
+    });
+    //  itamData = dataa.map((e) => MultiSelectItem(e, e)).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    var sesionProvider = Provider.of<FessProvider>(context, listen: false);
     return Scaffold(
       appBar: widget.fromBottomNav
           ? AppbarWidget(titleText: "Fess")
@@ -93,10 +99,13 @@ class _FessScreenState extends State<FessScreen> {
                       ),
                     ),
                     items:
+                        // sesionProvider.sessiondata.sessian[index].year
                         [
-                              "Session 2024-25",
-                              "Session 2023-24",
-                              "Session 2022-23",
+                              // sesionProvider.sessiondata!.sessian![0].year,
+                              "2025-26",
+                              "2024 -27",
+
+                              // sesionProvider.sessiondata!.sessian![1].year!,
                             ]
                             .map(
                               (item) => DropdownMenuItem(
@@ -117,20 +126,21 @@ class _FessScreenState extends State<FessScreen> {
                   padding: const EdgeInsets.all(20),
                   child: NextButton(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return MultiSelectDialogField(
-                            items: itamData,
+                      sesionProvider.getSession(context: context);
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return MultiSelectDialogField(
+                      //       items: itamData,
 
-                            title: Text("Select Fruits"),
-                            buttonText: Text("Fruits"),
-                            onConfirm: (values) {
-                              debugPrint("data from Multi Dilog fild $values");
-                            },
-                          );
-                        },
-                      );
+                      //       title: Text("Select Fruits"),
+                      //       buttonText: Text("Fruits"),
+                      //       onConfirm: (values) {
+                      //         debugPrint("data from Multi Dilog fild $values");
+                      //       },
+                      //     );
+                      //   },
+                      // );
                     },
                     text: "Continue",
                   ),

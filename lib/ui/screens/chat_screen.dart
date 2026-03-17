@@ -57,12 +57,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         )
                       : CircleAvatar(
                           radius: 25,
-
                           backgroundColor: Color(0xffffffff),
                         ),
                 ),
                 SizedBox(width: 10),
-
                 Consumer<LocalListUpdate>(
                   builder: (context, value, child) {
                     return Column(

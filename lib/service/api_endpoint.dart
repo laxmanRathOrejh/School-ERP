@@ -12,4 +12,6 @@ class ApiEndpoint {
   static String parentsDetails = "parent-details";
   static String teacherList = "get-all-teachers-chat";
   static String teacherChatHistory = "get-teacher-chats";
+  static String sendMessage = "chat-with-teacher";
+  static String session = "filter-utilities";
 }

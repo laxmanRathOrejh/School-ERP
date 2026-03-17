@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
+import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 import 'package:school_erp/ui/widgets/student_widget.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -42,12 +42,20 @@ class StudentProfilScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundImage: AssetImage(
-                                    "assets/image/student.jpg",
+                                InkWell(
+                                  onTap: () {
+                                    showImageDialog(
+                                      context: context,
+                                      imagePath: "assets/image/student.jpg",
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: AssetImage(
+                                      "assets/image/student.jpg",
+                                    ),
+                                    backgroundColor: Color(0xffffffff),
                                   ),
-                                  backgroundColor: Color(0xffffffff),
                                 ),
                               ],
                             ),
