@@ -12,7 +12,12 @@ class StudentProfilScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: fromBottomNav
-          ? AppbarWidget(titleText: "Profile")
+          ? AppbarWidget(
+              titleText: "Profile",
+              onMenuTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+            )
           : AppbarWithBackWidget(titleText: "Profile"),
       body: Container(
         color: Color(0xffeeeeee),

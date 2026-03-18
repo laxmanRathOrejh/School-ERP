@@ -33,7 +33,9 @@ class _PtChatsScreenState extends State<PtChatsScreen> {
     );
     return Scaffold(
       appBar: widget.fromBottomNav
-          ? AppbarWidget(titleText: "PT Chats")
+          ? AppbarWidget(titleText: "PT Chats",onMenuTap: () {
+          Scaffold.of(context).openDrawer();
+        },)
           : AppbarWithBackWidget(titleText: "PT Chats"),
 
       body: Container(

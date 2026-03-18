@@ -14,4 +14,5 @@ class ApiEndpoint {
   static String teacherChatHistory = "get-teacher-chats";
   static String sendMessage = "chat-with-teacher";
   static String session = "filter-utilities";
+  static String fessHistory = "payment-history";
 }

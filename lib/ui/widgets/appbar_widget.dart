@@ -3,7 +3,9 @@ import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;
-  const AppbarWidget({super.key, required this.titleText});
+    final VoidCallback? onMenuTap;
+
+  const AppbarWidget({super.key, required this.titleText,this.onMenuTap});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +15,13 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Color(0xffffffff),
       leading: Padding(
         padding: const EdgeInsets.only(left: 15),
-        child: CircleAvatar(
-          radius: 15,
-          backgroundColor: Color(0xFF337ce2),
-          child: Icon(Icons.menu),
+        child: InkWell(
+          onTap: onMenuTap,
+          child: CircleAvatar(
+            radius: 15,
+            backgroundColor: Color(0xFF337ce2),
+            child: Icon(Icons.menu),
+          ),
         ),
       ),
       centerTitle: true,

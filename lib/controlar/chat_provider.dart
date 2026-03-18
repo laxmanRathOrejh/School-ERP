@@ -21,27 +21,31 @@ class ChatDataProvider extends ChangeNotifier {
     if (isloding) {
       loadingBox(context: context);
     }
-    var response = await ApiCall.postRequest(
-      endPoint: ApiEndpoint.teacherChatHistory,
-      requestData: {"teacher_id": teacherId},
-    );
-    if (response["status"] == 200) {
-      debugPrint("here is respnse of CHAT$response");
-      chatModel = TeacherChatMadel.fromJson(response);
+    try {
+      var response = await ApiCall.postRequest(
+        endPoint: ApiEndpoint.teacherChatHistory,
+        requestData: {"teacher_id": teacherId},
+      );
+      if (response["status"] == 200) {
+        debugPrint("here is respnse of CHAT$response");
+        chatModel = TeacherChatMadel.fromJson(response);
 
-      notifyListeners();
-      if (isloding) {
-        scrollToBottom();
+        notifyListeners();
+        if (isloding) {
+          scrollToBottom();
+        }
+      } else if (response["status"] == 400) {
+        debugPrint("data not found $response");
+      } else {
+        debugPrint("errr $response");
       }
-    } else if (response["status"] == 400) {
-      debugPrint("data not found $response");
-    } else {
-      debugPrint("errr $response");
-    }
-    if (!context.mounted) return;
+      if (!context.mounted) return;
 
-    if (isloding) {
-      hideLoader(context);
+      if (isloding) {
+        hideLoader(context);
+      }
+    } catch (e) {
+      debugPrint("Cant full file demand $e");
     }
   }
 
@@ -49,6 +53,7 @@ class ChatDataProvider extends ChangeNotifier {
     required Map<String, dynamic> message,
     required BuildContext context,
   }) async {
+    try{
     var response = await ApiCall.postRequest(
       endPoint: ApiEndpoint.sendMessage,
       requestData: message,
@@ -68,6 +73,8 @@ class ChatDataProvider extends ChangeNotifier {
       debugPrint("message not send sucessfully ${response["message"]}");
     } else {
       debugPrint("Here is meeage Api Responnse$response");
+    }}catch (e) {
+      debugPrint("Cant full file demand $e");
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/chat_provider.dart';
-import 'package:school_erp/controlar/teacher_list_provider.dart';
+// import 'package:school_erp/controlar/teacher_list_provider.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
 class ChatScreen2 extends StatefulWidget {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
@@ -12,7 +11,12 @@ class CurriculumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: fromBottomNav
-          ? AppbarWidget(titleText: "Curriculum")
+          ? AppbarWidget(
+              titleText: "Curriculum",
+              onMenuTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+            )
           : AppbarWithBackWidget(titleText: "Curriculum"),
 
       body: Container(

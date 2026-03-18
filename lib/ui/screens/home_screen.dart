@@ -4,6 +4,7 @@ import 'package:school_erp/ui/screens/dashboard_screen.dart';
 import 'package:school_erp/ui/screens/fess_screen.dart';
 import 'package:school_erp/ui/screens/profil_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
+import 'package:school_erp/ui/widgets/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,9 +26,14 @@ class _Dashbard1State extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppbarWidget(titleText: titleText),
       extendBody: true,
       backgroundColor: Color(0xffffffff),
-      body: IndexedStack(index: currentindex, children: allPage),
+      body: //allPage[currentindex],
+      IndexedStack(
+        index: currentindex,
+        children: allPage,
+      ),
 
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(15),
@@ -82,16 +88,8 @@ class _Dashbard1State extends State<HomeScreen> {
           ),
         ),
       ),
-      // drawer: Column(
-      //   children: [
-      //     Text("data"),
-      //     Text("data"),
-      //     Text("data"),
-      //     Text("data"),
-      //     Text("data"),
-      //     Text("data"),
-      //   ],
-      // ),
+      drawerEnableOpenDragGesture: false,
+      drawer: Drawer(backgroundColor: .new(0xffffffff), child: DrawerWidget()),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/calendar_screen.dart';
+// import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/screens/chat_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
-import 'package:school_erp/ui/screens/curriculum_screen.dart';
+// import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/screens/fess_screen.dart';
@@ -10,7 +10,7 @@ import 'package:school_erp/ui/screens/for_pdf_show.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
-import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
+// import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 import 'package:school_erp/utils/constant.dart';
@@ -69,7 +69,7 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffd9f4ff),
       "image": "assets/image/fesshistry.png",
       "lable": "Fess History",
-      "route": FissHistoryScreem(),
+      "route": FissHistoryScreem(id: 1),
     },
     {
       "color": Color(0xffe0e3f3),
@@ -88,7 +88,12 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint("Screen Rebuild");
     return Scaffold(
-      appBar: AppbarWidget(titleText: "Dashboard"),
+      appBar: AppbarWidget(
+        titleText: "Dashboard",
+        onMenuTap: () {
+          Scaffold.of(context).openDrawer();
+        },
+      ),
       body: ListView(
         children: [
           Column(

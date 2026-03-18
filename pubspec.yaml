@@ -27,6 +27,7 @@ dependencies:
   photo_view: ^0.15.0
   file_picker: ^10.3.10
   syncfusion_flutter_pdfviewer: ^33.1.44
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
