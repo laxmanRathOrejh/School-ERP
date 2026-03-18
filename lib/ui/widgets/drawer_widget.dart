@@ -11,7 +11,7 @@ class DrawerWidget extends StatelessWidget {
         Container(
           decoration: BoxDecoration(),
           margin: EdgeInsets.zero,
-          child: CircleAvatar(radius: 70, backgroundColor: Color(0xfff00000)),
+          child: CircleAvatar(radius: 60, backgroundColor: Color(0xfff00000)),
         ),
         SizedBox(height: 10),
         Text(

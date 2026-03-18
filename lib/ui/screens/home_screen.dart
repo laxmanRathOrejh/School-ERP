@@ -26,7 +26,6 @@ class _Dashbard1State extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppbarWidget(titleText: titleText),
       extendBody: true,
       backgroundColor: Color(0xffffffff),
       body: //allPage[currentindex],
@@ -89,7 +88,7 @@ class _Dashbard1State extends State<HomeScreen> {
         ),
       ),
       drawerEnableOpenDragGesture: false,
-      drawer: Drawer(backgroundColor: .new(0xffffffff), child: DrawerWidget()),
+      drawer: Drawer(backgroundColor: Color(0xFFF3F2F2), child: DrawerWidget()),
     );
   }
 }

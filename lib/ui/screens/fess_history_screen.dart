@@ -1,10 +1,7 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/ui/widgets/custom_bootomsheet.dart';
-import 'package:school_erp/ui/widgets/next_button.dart';
-import 'package:school_erp/ui/widgets/student_widget.dart';
 
 class FissHistoryScreem extends StatefulWidget {
   final int id;
@@ -18,10 +15,8 @@ class FissHistoryScreem extends StatefulWidget {
 class _FissHistoryScreemState extends State<FissHistoryScreem> {
   @override
   void initState() {
-    debugPrint("int call ");
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint("APi Call ");
 
       context.read<FessProvider>().getFessHistory(
         context: context,
@@ -116,12 +111,7 @@ class _FissHistoryScreemState extends State<FissHistoryScreem> {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          // Text(
-                                          //   "1 ",
-                                          //   style: TextStyle(
-                                          //     fontWeight: FontWeight.bold,
-                                          //   ),
-                                          // ),
+                                         
                                           Text(
                                             fessHisProvider
                                                     .fessHistModel
