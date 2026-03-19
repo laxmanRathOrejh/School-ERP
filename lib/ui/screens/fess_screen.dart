@@ -43,12 +43,13 @@ class _FessScreenState extends State<FessScreen> {
       body: Container(
         color: Color(0xfff0f0f0),
         child: SingleChildScrollView(
+          
           padding: EdgeInsets.only(bottom: 50),
           child: Form(
             key: _formKey,
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Column(
+              child: Column(        
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 30),

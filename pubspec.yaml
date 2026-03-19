@@ -28,6 +28,8 @@ dependencies:
   file_picker: ^10.3.10
   syncfusion_flutter_pdfviewer: ^33.1.44
   url_launcher: ^6.3.2
+  intl: ^0.20.2
+  video_player: ^2.11.1
 
 dev_dependencies:
   flutter_test:

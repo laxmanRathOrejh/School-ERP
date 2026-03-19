@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-// import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/screens/chat_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
-// import 'package:school_erp/ui/screens/curriculum_screen.dart';
+import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/screens/fess_screen.dart';
-import 'package:school_erp/ui/screens/for_pdf_show.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
-// import 'package:school_erp/ui/screens/try_fucute_bilder.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 import 'package:school_erp/utils/constant.dart';
@@ -56,8 +53,10 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xfffce1e5),
       "image": "assets/image/curriculum.png",
       "lable": "Curriculum",
-      "route": ShowPdf(),
-      //CurriculumScreen(fromBottomNav: false),
+      "route": //ShowPdf(),
+      CurriculumScreen(
+        fromBottomNav: false,
+      ),
     },
     {
       "color": Color(0xfff0f0f0),

@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:school_erp/controlar/Curriculum_provider.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
+import 'package:school_erp/ui/widgets/notice_widget.dart';
 
-class CurriculumScreen extends StatelessWidget {
+class CurriculumScreen extends StatefulWidget {
   final bool fromBottomNav;
 
   const CurriculumScreen({super.key, required this.fromBottomNav});
 
   @override
+  State<CurriculumScreen> createState() => _CurriculumScreenState();
+}
+
+class _CurriculumScreenState extends State<CurriculumScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CurriculumProvider>().getCurriculum(context: context);
+    });
+  }
+
+  bool isSelected = true;
+  @override
   Widget build(BuildContext context) {
+    var curriculumProvider = Provider.of<CurriculumProvider>(
+      context,
+      listen: true,
+    );
     return Scaffold(
-      appBar: fromBottomNav
+      appBar: widget.fromBottomNav
           ? AppbarWidget(
               titleText: "Curriculum",
               onMenuTap: () {
@@ -43,11 +64,18 @@ class CurriculumScreen extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.only(left: 15, right: 15),
                             shape: BeveledRectangleBorder(),
-                            backgroundColor: Color(0xff528fe6),
-                            foregroundColor: Color(0xffffffff),
+                            backgroundColor: isSelected
+                                ? Color(0xff528fe6)
+                                : Color(0xffffffff),
+                            foregroundColor: isSelected
+                                ? Color(0xffffffff)
+                                : Color(0xFF454444),
                           ),
-
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isSelected = true;
+                            });
+                          },
                           child: Text(
                             "General",
                             style: TextStyle(fontSize: 10),
@@ -58,11 +86,19 @@ class CurriculumScreen extends StatelessWidget {
                             padding: EdgeInsets.only(left: 10, right: 10),
 
                             shape: BeveledRectangleBorder(),
-                            backgroundColor: Color(0xffffffff),
-                            foregroundColor: Color(0xFF454444),
+                            backgroundColor: isSelected
+                                ? Color(0xffffffff)
+                                : Color(0xff528fe6),
+                            foregroundColor: isSelected
+                                ? Color(0xFF454444)
+                                : Color(0xffffffff),
                           ),
 
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isSelected = false;
+                            });
+                          },
                           child: Text(
                             "Class wise",
                             style: TextStyle(
@@ -80,92 +116,31 @@ class CurriculumScreen extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Expanded(
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        border: Border.all(
-                          width: 0.1,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: InkWell(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => NoticBordScreen(),
-                                //   ),
-                                // );
-                              },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: Container(
-                                    color: Color(0xffdeeef8),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Icon(
-                                        Icons.wallet_rounded,
-                                        size: 29,
-                                        color: Color(0xff5e99e7),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                title: Text(
-                                  "Upcoming Events & important Dates.",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "Stay informend with our latest school events holdidays and essentmate dates Chek here regularly",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff909090),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+              child: Consumer<CurriculumProvider>(
+                builder: (context, value, child) {
+                  return ListView.builder(
+                    itemCount: isSelected
+                        ? value.noticeModel?.genaralNotice?.length ?? 0
+                        : curriculumProvider.noticeModel?.classNotice?.length ??
+                              0,
 
-                          Row(
-                            children: [
-                              SizedBox(width: 30),
-                              Icon(Icons.link, color: Color(0xff9c9c9c)),
-                              Expanded(
-                                child: Text(
-                                  " 2 Attachments",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff909090),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "3:35PM | 29 May 2024",
-                                style: TextStyle(
-                                  fontSize: 12,
-
-                                  color: Color(0xff909090),
-                                ),
-                              ),
-                              SizedBox(width: 20),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    itemBuilder: (context, index) {
+                      var genarlNotice =
+                          curriculumProvider.noticeModel?.genaralNotice?[index];
+                      var classNotice =
+                          curriculumProvider.noticeModel?.classNotice?[index];
+                      return isSelected
+                          ? NoticeWidget(
+                              provider: genarlNotice,
+                              index: index,
+                              mainProvider: curriculumProvider,
+                            )
+                          : NoticeWidget(
+                              provider: classNotice,
+                              index: index,
+                              mainProvider: curriculumProvider,
+                            );
+                    },
                   );
                 },
               ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:school_erp/controlar/Curriculum_provider.dart';
 import 'package:school_erp/controlar/auth_provider.dart';
 import 'package:school_erp/controlar/calendar_provider.dart';
 import 'package:school_erp/controlar/chat_provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/controlar/local_list_update.dart';
 import 'package:school_erp/controlar/parents_provider.dart';
+import 'package:school_erp/controlar/studentprofile_provider.dart';
 import 'package:school_erp/controlar/teacher_list_provider.dart';
 import 'package:school_erp/routes/router.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +21,10 @@ void main() {
         ChangeNotifierProvider(create: (_) => ParentsProvider()),
         ChangeNotifierProvider(create: (_) => TeacherListProvider()),
         ChangeNotifierProvider(create: (_) => ChatDataProvider()),
-        ChangeNotifierProvider(create: (_)=>LocalListUpdate()),
-        ChangeNotifierProvider(create: (_)=>FessProvider())
+        ChangeNotifierProvider(create: (_) => LocalListUpdate()),
+        ChangeNotifierProvider(create: (_) => FessProvider()),
+        ChangeNotifierProvider(create: (_) => StudentprofileProvider()),
+        ChangeNotifierProvider(create: (_)=>CurriculumProvider())
       ],
       child: MyApp(),
     ),

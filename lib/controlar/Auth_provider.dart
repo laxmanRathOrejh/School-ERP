@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_erp/service/api_call.dart';
@@ -23,25 +22,25 @@ class AuthProvider extends ChangeNotifier {
       endPoint: ApiEndpoint.login,
       requestData: requestData,
     );
-    Map<String, dynamic> data = jsonDecode(response);
-    debugPrint(
-      "This is response from Api Which we see in Provider${data["status"]}",
-    );
+   // Map<String, dynamic> data = jsonDecode(response);
+   // debugPrint(
+     // "This is response from Api Which we see in Provider${data["status"]}",
+   // );
     if (!context.mounted) return;
     hideLoader(context);
-    if (data["status"] == 200) {
-      mobileNo = data["mobile_no"];
-      if (data["is_pin"] == true) {
+    if (response["status"] == 200) {
+      mobileNo = response["mobile_no"];
+      if (response["is_pin"] == true) {
         context.push("/Verificatin/Screen");
-      } else if (data["is_pin"] == false) {
+      } else if (response["is_pin"] == false) {
         context.push("/CreatePin/Screen");
       } else {
-        showMessageBox(context: context, text: data["error"]);
+        showMessageBox(context: context, text: response["error"]);
       }
-    } else if (data["status"] == 400) {
-      showMessageBox(context: context, text: data["error"]);
+    } else if (response["status"] == 400) {
+      showMessageBox(context: context, text: response["error"]);
     } else {
-      showMessageBox(context: context, text: data.toString());
+      showMessageBox(context: context, text: response.toString());
     }
 
     debugPrint(requestData.toString());
@@ -58,19 +57,19 @@ class AuthProvider extends ChangeNotifier {
       endPoint: ApiEndpoint.verifiy,
       requestData: requestData,
     );
-    Map<String, dynamic> data = jsonDecode(response);
+  //  Map<String, dynamic> data = jsonDecode(response);
     if (!context.mounted) return;
 
     hideLoader(context);
-    if (data["status"] == 200) {
-      tokanFromServer = data["token"];
+    if (response["status"] == 200) {
+      tokanFromServer = response["token"];
       saveToken(tokanFromServer);
       context.go("/home/Screen");
       debugPrint("here we see token in provider $tokanFromServer");
-    } else if (data["status"] == 400) {
-      showMessageBox(context: context, text: data["error"]);
+    } else if (response["status"] == 400) {
+      showMessageBox(context: context, text: response["error"]);
     } else {
-      showMessageBox(context: context, text: data.toString());
+      showMessageBox(context: context, text: response.toString());
     }
   }
 
