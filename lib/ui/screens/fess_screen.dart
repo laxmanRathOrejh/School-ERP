@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
+import 'package:school_erp/model/session_model.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
@@ -16,14 +17,15 @@ class FessScreen extends StatefulWidget {
   State<FessScreen> createState() => _FessScreenState();
 }
 
+List emtyList = [];
+
 class _FessScreenState extends State<FessScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? selectedClass;
+  int? selectedClass;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       context.read<FessProvider>().getSession(context: context);
     });
   }
@@ -43,13 +45,12 @@ class _FessScreenState extends State<FessScreen> {
       body: Container(
         color: Color(0xfff0f0f0),
         child: SingleChildScrollView(
-          
           padding: EdgeInsets.only(bottom: 50),
           child: Form(
             key: _formKey,
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Column(        
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 30),
@@ -78,7 +79,7 @@ class _FessScreenState extends State<FessScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Consumer<FessProvider>(
                       builder: (context, value, child) {
-                        return DropdownButtonFormField<String>(
+                        return DropdownButtonFormField<SessionData>(
                           icon: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
@@ -86,12 +87,9 @@ class _FessScreenState extends State<FessScreen> {
                               size: 28,
                             ),
                           ),
-
-                          initialValue: selectedClass,
+                          //    initialValue: selectedClass,
                           isExpanded: true,
-
                           focusColor: Color(0xffdeeef8),
-
                           dropdownColor: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           decoration: InputDecoration(
@@ -118,7 +116,6 @@ class _FessScreenState extends State<FessScreen> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(color: Colors.red),
                             ),
-
                             focusedErrorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(
@@ -127,22 +124,21 @@ class _FessScreenState extends State<FessScreen> {
                               ),
                             ),
                           ),
-                          items: sesionProvider.allSession
+                          items: (sesionProvider.sessionData?.sessian ?? [])
                               .map(
                                 (item) => DropdownMenuItem(
                                   value: item,
-                                  child: Text(item),
+                                  child: Text(item.year ?? ""),
                                 ),
                               )
                               .toList(),
-
                           onChanged: (value) {
                             setState(() {
-                              selectedClass = value;
+                                selectedClass = value?.id??0;
                             });
                           },
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null) {
                               return "Select Session First ";
                             }
                             return null;
@@ -161,12 +157,8 @@ class _FessScreenState extends State<FessScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => FissHistoryScreem(
-                                id:
-                                    sesionProvider
-                                        .sessionData
-                                        ?.sessian?.first
-                                        .schoolId ??
-                                    0,
+                                id:selectedClass??0
+                                   
                               ),
                             ),
                           );

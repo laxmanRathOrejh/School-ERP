@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ShowFullPdf extends StatelessWidget {
-  final File pdfdata;
+  final String pdfdata;
   const ShowFullPdf({super.key, required this.pdfdata});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SfPdfViewer.file(pdfdata));
+    return Scaffold(body: SafeArea(child: SfPdfViewer.network(pdfdata)));
   }
 }

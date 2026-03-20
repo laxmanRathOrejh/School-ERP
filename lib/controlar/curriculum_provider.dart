@@ -14,7 +14,7 @@ class CurriculumProvider extends ChangeNotifier {
       requestData: {},
     );
 
-    if (response["status"] == 200) {
+    if (response !=null &&  response["status"] == 200) {
       //add data to model
       noticeModel = NoticeModel.fromJson(response);
       notifyListeners();
@@ -22,7 +22,7 @@ class CurriculumProvider extends ChangeNotifier {
         "resopone from Circulaam Model ${noticeModel?.genaralNotice?[0].id.toString()}",
       );
       debugPrint("Sucessfully get response $response");
-    } else if (response["status"] == 400) {
+    } else if (response !=null && response["status"] == 400) {
       debugPrint("Status 400 in Notice Api$response");
     } else {
       debugPrint("cant get data from Notice BoadA Api$response");

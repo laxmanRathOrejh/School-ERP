@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/show_full_pdf.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 
 class ShowPdf extends StatefulWidget {
@@ -46,13 +45,13 @@ class _ShowPdfState extends State<ShowPdf> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ShowFullPdf(pdfdata: fileFromMemory![index]),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //        // ShowFullPdf(pdfdata: fileFromMemory![index]),
+                          //   ),
+                          // );
                         },
                         child: ListTile(
                           leading: Icon(

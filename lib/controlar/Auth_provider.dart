@@ -28,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
    // );
     if (!context.mounted) return;
     hideLoader(context);
-    if (response["status"] == 200) {
+    if (response !=null && response["status"] == 200) {
       mobileNo = response["mobile_no"];
       if (response["is_pin"] == true) {
         context.push("/Verificatin/Screen");
@@ -37,7 +37,7 @@ class AuthProvider extends ChangeNotifier {
       } else {
         showMessageBox(context: context, text: response["error"]);
       }
-    } else if (response["status"] == 400) {
+    } else if (response !=null && response["status"] == 400) {
       showMessageBox(context: context, text: response["error"]);
     } else {
       showMessageBox(context: context, text: response.toString());
@@ -61,12 +61,12 @@ class AuthProvider extends ChangeNotifier {
     if (!context.mounted) return;
 
     hideLoader(context);
-    if (response["status"] == 200) {
+    if (response !=null && response["status"] == 200) {
       tokanFromServer = response["token"];
       saveToken(tokanFromServer);
       context.go("/home/Screen");
       debugPrint("here we see token in provider $tokanFromServer");
-    } else if (response["status"] == 400) {
+    } else if (response !=null && response["status"] == 400) {
       showMessageBox(context: context, text: response["error"]);
     } else {
       showMessageBox(context: context, text: response.toString());

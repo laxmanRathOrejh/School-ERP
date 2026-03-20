@@ -15,6 +15,7 @@ class SessionModel {
 }
 
 class SessionData {
+  int? id;
   int? schoolId;
   String? year;
   String? status;
@@ -23,6 +24,7 @@ class SessionData {
   String? updateAt;
 
   SessionData({
+    this.id,
     this.schoolId,
     this.year,
     this.status,
@@ -31,7 +33,8 @@ class SessionData {
     this.updateAt,
   });
   SessionData.fromJson(Map<String, dynamic> sesianData) {
-    schoolId = sesianData["id"];
+    id = sesianData["id"];
+    schoolId = sesianData["school_id"];
     year = sesianData["year"];
     status = sesianData["status"];
     exisitStatus = sesianData["exist_status"];

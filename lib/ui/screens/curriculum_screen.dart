@@ -77,7 +77,7 @@ class _CurriculumScreenState extends State<CurriculumScreen> {
                             });
                           },
                           child: Text(
-                            "General",
+                            "Genaral",
                             style: TextStyle(fontSize: 10),
                           ),
                         ),
@@ -126,9 +126,9 @@ class _CurriculumScreenState extends State<CurriculumScreen> {
 
                     itemBuilder: (context, index) {
                       var genarlNotice =
-                          curriculumProvider.noticeModel?.genaralNotice?[index];
+                          curriculumProvider.noticeModel?.genaralNotice;
                       var classNotice =
-                          curriculumProvider.noticeModel?.classNotice?[index];
+                          curriculumProvider.noticeModel?.classNotice;
                       return isSelected
                           ? NoticeWidget(
                               provider: genarlNotice,

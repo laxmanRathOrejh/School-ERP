@@ -12,7 +12,7 @@ class StudentprofileProvider extends ChangeNotifier {
       endPoint: ApiEndpoint.studentDetails,
     );
 
-    if (response["status"] == 200) {
+    if (response !=null && response["status"] == 200) {
       studentModel = StudentModel.fromJson(response);
       notifyListeners();
       debugPrint(
@@ -20,7 +20,7 @@ class StudentprofileProvider extends ChangeNotifier {
       );
       //add data to model
       debugPrint("here id data from api $response");
-    } else if (response["status"] == 400) {
+    } else if (response !=null && response["status"] == 400) {
       debugPrint("code 400 cant ${response["message"]}");
     } else {
       debugPrint("here is response if mrhad not work $response");

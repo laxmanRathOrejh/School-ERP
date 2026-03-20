@@ -16,8 +16,8 @@ void showImageDialog({
         backgroundColor: Colors.transparent,
         elevation: 0,
         child: SizedBox(
-          height: 200,
-          width: 300,
+          height: 500,
+          width: 30,
           child: Center(
             child: PhotoView(
               imageProvider: isAssetskImage

@@ -14,6 +14,7 @@ class NoticeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var newprovider = provider[index];
     return Padding(
       padding: const EdgeInsets.only(top: 5, bottom: 5),
       child: Container(
@@ -32,6 +33,7 @@ class NoticeWidget extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => NoticBordScreen(
                         provider: provider,
+                        index: index,
                         mainProvider: mainProvider,
                       ),
                     ),
@@ -53,11 +55,11 @@ class NoticeWidget extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    provider?.title ?? "",
+                    newprovider?.title ?? "",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    provider?.description ?? "",
+                    newprovider?.description ?? "",
                     style: TextStyle(fontSize: 12, color: Color(0xff909090)),
                   ),
                 ),
@@ -69,18 +71,18 @@ class NoticeWidget extends StatelessWidget {
                 SizedBox(width: 30),
                 Padding(
                   padding: const EdgeInsets.all(1.0),
-                  child: provider?.attachments != null
+                  child: newprovider?.attachments != null
                       ? Icon(Icons.link, color: Color(0xff9c9c9c))
                       : SizedBox(height: 10),
                 ),
                 Expanded(
                   child: Text(
-                    provider?.attachments?.length.toString() ?? "",
+                    newprovider?.attachments?.length.toString() ?? "",
                     style: TextStyle(fontSize: 12, color: Color(0xff909090)),
                   ),
                 ),
                 Text(
-                  mainProvider.formatDate(provider?.createdAt ?? ""),
+                  mainProvider.formatDate(newprovider?.createdAt ?? ""),
                   style: TextStyle(fontSize: 12, color: Color(0xff909090)),
                 ),
                 SizedBox(width: 20),

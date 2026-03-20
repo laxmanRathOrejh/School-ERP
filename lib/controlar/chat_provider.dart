@@ -26,7 +26,7 @@ class ChatDataProvider extends ChangeNotifier {
         endPoint: ApiEndpoint.teacherChatHistory,
         requestData: {"teacher_id": teacherId},
       );
-      if (response["status"] == 200) {
+      if (response !=null && response["status"] == 200) {
         debugPrint("here is respnse of CHAT$response");
         chatModel = TeacherChatMadel.fromJson(response);
 
@@ -34,7 +34,7 @@ class ChatDataProvider extends ChangeNotifier {
         if (isloding) {
           scrollToBottom();
         }
-      } else if (response["status"] == 400) {
+      } else if (response !=null && response["status"] == 400) {
         debugPrint("data not found $response");
       } else {
         debugPrint("errr $response");

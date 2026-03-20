@@ -12,12 +12,12 @@ class CalendarProvider extends ChangeNotifier {
 
    // debugPrint("here is calender data $calenderData");
 
-    if (eventdata["status"] == 200) {
+    if (eventdata !=null && eventdata["status"] == 200) {
    //   debugPrint("type of data${calenderData.runtimeType}");
       allEvent = eventdata;
       notifyListeners();
       debugPrint(allEvent.toString());
-    } else if (eventdata["status"] == 400) {
+    } else if (eventdata !=null && eventdata["status"] == 400) {
       debugPrint(eventdata["message"]);
     } else {
       debugPrint(eventdata.toString());

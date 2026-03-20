@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:school_erp/ui/screens/show_full_pdf.dart';
+import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
 class NoticBordScreen extends StatefulWidget {
   final dynamic provider;
   final dynamic mainProvider;
-  //int? index;
+  final int index;
   const NoticBordScreen({
     super.key,
+    required this.index,
     required this.provider,
     required this.mainProvider,
   });
@@ -22,6 +26,9 @@ class _NoticBordScreenState extends State<NoticBordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var newProvider = widget.provider[widget.index];
+    var attachment = newProvider?.attachments;
+
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
@@ -59,67 +66,191 @@ class _NoticBordScreenState extends State<NoticBordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.provider.title ?? "",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              newProvider.title ?? "",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.mainProvider.formatDate(
-                      widget.provider?.createdAt ?? "",
-                    ),
-                    style: TextStyle(color: Color(0xffb5b5b5)),
-                  ),
-                ),
-                Icon(Icons.link, color: Color(0xff8c8c8c)),
-
-                Row(
-                  children: [
-                    Text(
-                      widget.provider.attachments?.length.toString() ?? "",
-                      style: TextStyle(fontSize: 12, color: Color(0xffbcbcbc)),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
             Text(
-              widget.provider.description ?? "",
+              widget.mainProvider.formatDate(newProvider?.createdAt ?? ""),
+              style: TextStyle(color: Color(0xffb5b5b5), fontSize: 12),
+            ),
+            SizedBox(height: 10),
+            Text(
+              newProvider.description ?? "",
               style: TextStyle(color: Color(0xff9e9e9e)),
             ),
-            SizedBox(height: 30),
+            Divider(),
+            // SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.all(1.0),
-              child: widget.provider?.attachments != null
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
+              child: newProvider?.attachments != null
                   ? Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: Icon(Icons.link, color: Color(0xff8c8c8c)),
                         ),
-                        Text(
-                          widget.provider?.attachments.length.toString() ?? "",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xffb5b5b5),
-                          ),
-                        ),
+
                         SizedBox(width: 10),
                         Text(
                           "Attachment",
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xffb5b5b5),
+                            color: Color(0xFF8C8C8C),
                           ),
                         ),
                       ], //Image.file(File(image[index].path!)
                     )
                   : SizedBox(height: 10),
             ),
+
             SizedBox(height: 20),
+            SizedBox(
+              // color: Colors.black,
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ...(attachment ?? []).map((itam) {
+                    String fullurl = Uri.encodeFull(
+                      "${widget.mainProvider.noticeModel?.asseetUrl}${itam.filePath}",
+                    );
+                    switch (itam.type) {
+                      case "video":
+                        return SizedBox(width: 200, height: 200);
+                      case "image":
+                        return InkWell(
+                          onTap: () {
+                            showImageDialog(
+                              isAssetskImage: false,
+                              imagePath: fullurl,
+                              context: context,
+                            );
+                          },
+                          child: Container(
+                            height: 130,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            margin: EdgeInsets.all(5),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: CachedNetworkImage(
+                                imageUrl: fullurl,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+
+                      //  case "pdf":
+                      // return Text(itam["path"]);
+                      default:
+                        return SizedBox();
+                    }
+                  }),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
+            Row(
+              children: [
+                ...(attachment ?? []).map((itam) {
+                  String fullurl = Uri.encodeFull(
+                    "${widget.mainProvider.noticeModel?.asseetUrl}${itam.filePath}",
+                  );
+                  switch (itam.type) {
+                    case "pdf":
+                      return SizedBox(
+                        // height: 50,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ShowFullPdf(pdfdata: fullurl),
+                              ),
+                            );
+                            // ShowFullPdf(pdfdata: fullurl??"",);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Color(0xFFa8b6d1),
+                                  radius: 24,
+                                  child: Icon(
+                                    Icons.picture_as_pdf,
+                                    size: 14,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "logisticdocx",
+                                  // .path.split('/').last,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // child: ListTile(
+                        //   leading: Icon(
+                        //     Icons.picture_as_pdf,
+                        //     color: Colors.red,
+                        //   ),
+                        //   title: Text(
+                        //     fullurl,
+                        //     // .path.split('/').last,
+                        //   ),
+                        // ),
+                      );
+                    default:
+                      return SizedBox();
+                  }
+                }),
+              ],
+            ),
+            /////////////////////////////////////
+
+            // Column(
+            //   children: [
+            //     if (widget.provider.attachments[widget.index].type ==
+            //         "image") ...[
+            //       Container(
+            //         height: 100,
+            //         width: 100,
+            //         child: CachedNetworkImage(
+            //           imageUrl:
+            //               widget.provider.attachments[widget.index].filePath ??
+            //             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4JVlhhjx2M8Ku4oSuGnnY4g9ZrpgO7kIUh6JsaJb1hw&s"//  "assets/image/attendance.png",
+            //         ),
+            //       ),
+            //     ],
+            //   ],
+            // ),
+            //  Column(
+            //    children: [
+            //     if (widget.provider.attachments[widget.index].type ==
+            //         "image") ...[
+            //       Text(
+            //         widget.provider.attachments[widget.index].type.toString(),
+            //       ),
+            //       SizedBox(
+            //         height: 200,
+            //         width: 200,
+            //         child: CachedNetworkImage(
+            //           imageUrl:
+            //               widget.provider.attachments[widget.index].filePath,
+            //         ),
+            //         //  cached_network_image
+            //       ),
+            //     ],
+            //   ],
+            // ),
 
             // Expanded(
             //   child: image.isEmpty

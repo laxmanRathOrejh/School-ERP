@@ -12,11 +12,11 @@ class ParentsProvider extends ChangeNotifier {
       endPoint: ApiEndpoint.parentsDetails,
     );
     debugPrint("Respoponse from get api Parents details $response");
-    if (response["status"] == 200) {
+    if (response !=null && response["status"] == 200) {
       final fromjson = APIResponse.formjson(response);
       parentsDetails = fromjson.student;
       notifyListeners();
-    } else if (response["status"] == 400) {
+    } else if (response !=null && response["status"] == 400) {
     } else {}
     if (!context.mounted) return;
     hideLoader(context);

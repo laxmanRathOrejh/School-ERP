@@ -9,12 +9,12 @@ class TeacherListProvider extends ChangeNotifier {
   Future<void> getTeacherList({required BuildContext context}) async {
     loadingBox(context: context);
     var respnse = await ApiCall.getRequest(endPoint: ApiEndpoint.teacherList);
-    if (respnse["status"] == 200) {
+    if (respnse !=null && respnse["status"] == 200) {
       teacherList= TeacherList.fromJson(respnse);
       // teacherList = fromjson;
       notifyListeners();
       //add data to model
-    } else if (respnse["status"] == 400) {
+    } else if (respnse !=null && respnse["status"] == 400) {
       debugPrint(respnse["message"]);
     } else {
       debugPrint(respnse);

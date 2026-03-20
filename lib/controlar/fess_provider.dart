@@ -34,7 +34,7 @@ import 'package:url_launcher/url_launcher.dart';
 // }
 class FessProvider extends ChangeNotifier {
   SessionModel? sessionData;
-  List<String> allSession = [];
+  List<String>? allSession;
 
   Future<void> getSession({required BuildContext context}) async {
     if (!context.mounted) return;
@@ -44,16 +44,16 @@ class FessProvider extends ChangeNotifier {
     try {
       var response = await ApiCall.getRequest(endPoint: ApiEndpoint.session);
 
-      if (response["status"] == 200) {
+      if (response !=null && response["status"] == 200) {
         sessionData = SessionModel.fromJson(response);
 
         // safely extract session years
-        allSession =
-            sessionData?.sessian
-                ?.map((e) => e.year ?? "")
-                .where((year) => year.isNotEmpty)
-                .toList() ??
-            [];
+        allSession = sessionData?.sessian?.map((e) => e.year??"").toList()??[];
+        // sessionData?.sessian
+        //     ?.map((e) => e.year ?? "")
+        //     .where((year) => year.isNotEmpty)
+        //     .toList() ??
+        // [];
 
         debugPrint("Data from Model: ${sessionData?.message}");
         notifyListeners();
@@ -82,7 +82,7 @@ class FessProvider extends ChangeNotifier {
     if (response["status"] == 200) {
       fessHistModel = FessHistModel.fromJson(response);
       notifyListeners();
-      //add dota to model
+      //add data to model
     } else if (response["status"] == 400) {
       debugPrint("respons from code 400 ${response["message"]}");
     } else {
@@ -95,7 +95,7 @@ class FessProvider extends ChangeNotifier {
   Future<void> downlideResp() async {
     String url =
         "${ApiEndpoint.serverURL}${fessHistModel?.fessData?[0].reciptNo}";
-   // String url = "https://nauticalerp.itworkshop.in/";
+    // String url = "https://nauticalerp.itworkshop.in/";
     //url += "${fessHistModel?.fessData?[0].reciptNo}";
     final Uri uri = Uri.parse(url);
 
