@@ -46,7 +46,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(1),
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

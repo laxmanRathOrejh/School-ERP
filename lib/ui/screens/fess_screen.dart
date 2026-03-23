@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/model/session_model.dart';
 import 'package:school_erp/ui/screens/fess_history_screen.dart';
+import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
@@ -10,8 +11,13 @@ import 'package:school_erp/ui/widgets/next_button.dart';
 
 class FessScreen extends StatefulWidget {
   final bool fromBottomNav;
+  final bool forFessHistory;
 
-  const FessScreen({super.key, required this.fromBottomNav});
+  const FessScreen({
+    super.key,
+    required this.forFessHistory,
+    required this.fromBottomNav,
+  });
 
   @override
   State<FessScreen> createState() => _FessScreenState();
@@ -134,7 +140,7 @@ class _FessScreenState extends State<FessScreen> {
                               .toList(),
                           onChanged: (value) {
                             setState(() {
-                                selectedClass = value?.id??0;
+                              selectedClass = value?.id ?? 0;
                             });
                           },
                           validator: (value) {
@@ -156,10 +162,9 @@ class _FessScreenState extends State<FessScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FissHistoryScreem(
-                                id:selectedClass??0
-                                   
-                              ),
+                              builder: (context) => widget.forFessHistory
+                                  ? FissHistoryScreem(id: selectedClass ?? 0)
+                                  : FessPaymentScreen(id: selectedClass ?? 0),
                             ),
                           );
                         }

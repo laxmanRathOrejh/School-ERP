@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_erp/ui/widgets/dialog/logout_dialog.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -185,7 +186,38 @@ class DrawerWidget extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 50),
           ],
+        ),
+        Container(
+          margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Color(0xFF3B6FD8),
+            borderRadius: BorderRadius.circular(34),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                logOutBox(context: context);
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 34),
+
+                  Text(" Logout ", style: TextStyle(color: Color(0xffffffff))),
+                  RotatedBox(
+                    quarterTurns: 2,
+                    child: Icon(
+                      Icons.logout_outlined,
+                      color: Color(0xffffffff),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );

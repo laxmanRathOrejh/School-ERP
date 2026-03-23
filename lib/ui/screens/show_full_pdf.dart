@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ShowFullPdf extends StatelessWidget {
@@ -9,6 +8,9 @@ class ShowFullPdf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: SfPdfViewer.network(pdfdata)));
+    return Scaffold(
+      appBar: AppbarWithBackWidget(titleText: "Detail pdf"),
+      body: SafeArea(child: SfPdfViewer.network(pdfdata)),
+    );
   }
 }

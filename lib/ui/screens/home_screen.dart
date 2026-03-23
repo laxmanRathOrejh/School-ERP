@@ -17,7 +17,7 @@ class _Dashbard1State extends State<HomeScreen> {
   List<Widget> allPage = [
     DashboardScreen(),
     CurriculumScreen(fromBottomNav: true),
-    FessScreen(fromBottomNav: true),
+    FessScreen(fromBottomNav: true,forFessHistory: true,),
     PtChatsScreen(fromBottomNav: true),
     StudentProfilScreen(fromBottomNav: true),
   ];

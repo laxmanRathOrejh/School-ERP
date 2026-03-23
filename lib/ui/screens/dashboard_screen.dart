@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/ui/screens/chat_screen.dart';
+import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fakedoata.dart';
@@ -9,7 +9,6 @@ import 'package:school_erp/ui/screens/fess_screen.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
-import 'package:school_erp/ui/screens/videoPlayer.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 import 'package:school_erp/utils/constant.dart';
@@ -23,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      "route": Fakedata(),
+      "route":CalanderScreen()
       //SimpleVideo()
       //hatScreen(),
       //CalanderScreen(),
@@ -33,7 +32,7 @@ class DashboardScreen extends StatelessWidget {
       "image": "assets/image/fess.png",
       "lable": "Fees",
 
-      "route": FessScreen(fromBottomNav: false),
+      "route": FessScreen(fromBottomNav: false, forFessHistory: false),
     },
     {
       "color": Color(0xffd2e7fa),
@@ -66,13 +65,14 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xfff0f0f0),
       "image": "assets/image/timetable.png",
       "lable": "TimeTable",
-      "route": FessPaymentScreen(),
+      "route": FessScreen(fromBottomNav: false, forFessHistory: true),
     },
     {
       "color": Color(0xffd9f4ff),
       "image": "assets/image/fesshistry.png",
       "lable": "Fess History",
-      "route": FissHistoryScreem(id: 1),
+      "route": FessScreen(fromBottomNav: false, forFessHistory: true),
+      //FissHistoryScreem(id: 1),
     },
     {
       "color": Color(0xffe0e3f3),
@@ -81,12 +81,7 @@ class DashboardScreen extends StatelessWidget {
       "route": MultiSelectExample(),
     },
   ];
-  void removeToken() async {
-    var shrf = await SharedPreferences.getInstance();
-    shrf.remove(authToken);
-    debugPrint("Token is removed");
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     debugPrint("Screen Rebuild");

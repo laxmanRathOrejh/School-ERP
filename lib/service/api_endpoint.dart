@@ -17,4 +17,5 @@ class ApiEndpoint {
   static String fessHistory = "payment-history";
   static String studentDetails = "student-details";
   static String curriculum = "notice-board";
+  static String fessDetails = "fees-details";
 }
