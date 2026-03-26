@@ -1,12 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
 
 class FessPaymentScreen extends StatefulWidget {
-  int id;
-  FessPaymentScreen({super.key, required this.id});
+final  int id;
+ const FessPaymentScreen({super.key, required this.id});
 
   @override
   State<FessPaymentScreen> createState() => _FessPaymentScreenState();

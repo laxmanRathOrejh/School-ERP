@@ -13,6 +13,7 @@ class ApiCall {
       final prefs = await SharedPreferences.getInstance();
 
       String? token = prefs.getString(authToken);
+      
 
       Map<String, String> appHeader = {"Content-Type": "application/json"};
 

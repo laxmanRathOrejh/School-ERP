@@ -1,28 +1,30 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:school_erp/ui/screens/calendar_screen.dart';
 import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
-import 'package:school_erp/ui/screens/fakedoata.dart';
-import 'package:school_erp/ui/screens/fess_history_screen.dart';
-import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/screens/fess_screen.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
-import 'package:school_erp/utils/constant.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   DashboardScreen({super.key});
 
-  final List<Map<String, dynamic>> dashbordItam = [
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  List<Map<String, dynamic>> dashbordItam = [
     {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      "route":CalanderScreen()
+      "route": CalanderScreen(),
       //SimpleVideo()
       //hatScreen(),
       //CalanderScreen(),
@@ -31,7 +33,6 @@ class DashboardScreen extends StatelessWidget {
       "color": Color(0xffddf9d8),
       "image": "assets/image/fess.png",
       "lable": "Fees",
-
       "route": FessScreen(fromBottomNav: false, forFessHistory: false),
     },
     {
@@ -81,7 +82,55 @@ class DashboardScreen extends StatelessWidget {
       "route": MultiSelectExample(),
     },
   ];
-  
+
+  List screenNameList = ["Calendar", "Contact", "Attendance"];
+
+  List<dynamic> allScreenData = [];
+
+  void addData() {
+    print("Tap on button");
+    // for (int i = 0; i < screenNameList.length; i++) {
+    dashbordItam.removeWhere((map) => !screenNameList.contains(map["lable"]));
+    // for (int i = 0; i < screenNameList.length; i++) {
+    //   dashbordItam.removeWhere((itam) => itam["lable"] !=screenNameList[i]);
+    // }
+    // dashbordItam.removeWhere((e) => e["lable"] == screenNameList[i]);
+    //listOfMaps.removeWhere((map) => !listOfKeys.contains(map["name"]));
+
+    // allScreenData = dashbordItam
+    //     .where((n) => n["lable"] == screenNameList[i])
+    //     .toList();
+    // }
+    //   print("here is new list dara $allScreenData");
+
+    // setState(() {
+    //   dashbordItam.addAll({});
+    //   print("here is list $dashbordItam");
+    // });
+
+    // for (int i = 0; i < screenNameList.length; i++) {
+    //   for (var itan in dashbordItam) {
+    //     if (itan["lable"] != screenNameList[i]) {
+    //       setState(() {
+    //         dashbordItam.add(itan);
+    //       });
+    //     }
+    //   }
+    // }
+    //       print("here is all SCreen list $allScreenData");
+    //       debugPrint("here is list itam $itan");
+    //     }
+    //   }
+    // }
+    //   dashbordItam.map((e) => {e["lable"] == screenNameList[0], });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     debugPrint("Screen Rebuild");
@@ -117,11 +166,16 @@ class DashboardScreen extends StatelessWidget {
                               bottom: 2.5,
                               top: 2.5,
                             ),
-                            child: Text(
-                              "Scholar No. 112233",
-                              style: TextStyle(
-                                fontSize: 9,
-                                color: Colors.white,
+                            child: InkWell(
+                              onTap: () {
+                                addData();
+                              },
+                              child: Text(
+                                "Scholar No. 112233",
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -205,57 +259,215 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-              GridView.builder(
+
+              // Wrap(
+              //   children: [
+              //     for (var map in dashbordItam)
+              //       if (screenNameList.contains(map["lable"]))
+              //         Padding(
+              //           padding: const EdgeInsets.all(20.0),
+              //           child: InkWell(
+              //             onTap: () {
+              //               Navigator.push(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                   builder: (context) => map["route"],
+              //                 ),
+              //               );
+              //             },
+              //             child: Column(
+              //               children: [
+              //                 Container(
+              //                   width: 80,
+              //                   height: 80,
+              //                   decoration: BoxDecoration(
+              //                     borderRadius: BorderRadius.circular(15),
+              //                     color: map["color"],
+              //                   ),
+              //                   child: Center(
+              //                     child: Image.asset(map["image"], scale: 5),
+              //                   ),
+              //                 ),
+              //                 SizedBox(height: 9),
+              //                 Text(
+              //                   map["lable"],
+              //                   style: TextStyle(
+              //                     fontSize: 11,
+              //                     fontWeight: FontWeight.w700,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //   ],
+              // ),
+
+              //    itemCount: dashbordItam
+              //.where((map) => screenNameList.contains(map["lable"]))
+              //.length,
+              //  var filtered = dashbordItam
+              //  .where((map) => screenNameList.contains(map["lable"]))
+              //.toList();
+              // var map = filtered[index];
+              // GridView.builder(
+              //   itemCount: dashbordItam
+              //       .where((map) => screenNameList.contains(map["lable"]))
+              //       .length,
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 3,
+              //   ),
+              //   itemBuilder: (context, index) {
+              //     var filtered = dashbordItam
+              //         .where((map) => screenNameList.contains(map["lable"]))
+              //         .toList();
+              //     var map = filtered[index];
+              //     return InkWell(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(builder: (context) => map["route"]),
+              //         );
+              //       },
+              //       child: Column(
+              //         children: [
+              //           Container(
+              //             width: 80,
+              //             height: 80,
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(15),
+              //               color: map["color"],
+              //             ),
+              //             child: Center(
+              //               child: Image.asset(map["image"], scale: 5),
+              //             ),
+              //           ),
+              //           SizedBox(height: 9),
+              //           Text(
+              //             map["lable"],
+              //             style: TextStyle(
+              //               fontSize: 11,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     );
+              //   },
+              // ),
+
+              GridView.count(
                 shrinkWrap: true,
-                itemCount: dashbordItam.length,
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(left: 20, right: 20),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
-                  childAspectRatio: .87,
-                ),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => dashbordItam[index]["route"],
-                        ),
-                      );
-                    },
-
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: dashbordItam[index]["color"],
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                              dashbordItam[index]["image"],
-                              scale: 5,
+                crossAxisCount: 3,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+                childAspectRatio: .87,
+                children: [
+                  for (var map in dashbordItam)
+                    if (screenNameList.contains(map["lable"]))
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => map["route"],
                             ),
-                          ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: map["color"],
+                              ),
+                              child: Center(
+                                child: Image.asset(map["image"], scale: 5),
+                              ),
+                            ),
+                            SizedBox(height: 9),
+                            Text(
+                              map["lable"],
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 9),
-                        Text(
-                          dashbordItam[index]["lable"],
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                ],
               ),
+
+              // var newScreenList = dashbordItam
+              //     .where((n) => n["lable"] == screenNameList)
+              //     .toList();
+              // print("here is new list dara $newScreenList");
+              // var screenData = dashbordItam
+              //     .where((itam) => itam["lable"] == screenNameList[index])
+              //     .toList();
+              // for (int i = 1; i < dashbordItam.length; i++) {
+
+              // }
+              // for (int j = 0; j < screenNameList.length; j++) {
+              // //  if (dashbordItam.contains(screenNameList[j])) {
+              //     print(screenNameList[j]);
+              //     allScreenData.add(screenNameList[j]);
+              //   }
+              //   debugPrint(allScreenData.toString());
+              // }
+              // var allScreen = dashbordItam[index];
+
+              // if (screenNameList.contains(allScreen["lable"])) {
+              //  return
+
+              //   for (var map in dashbordItam)
+              //     if (screenNameList.contains(map["lable"]))
+              //     InkWell(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => dashbordItam[index]["route"],
+              //           ),
+              //         );
+              //       },
+              //       child: Column(
+              //         children: [
+              //           Container(
+              //             width: 80,
+              //             height: 80,
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(15),
+              //               color: dashbordItam[index]["color"],
+              //             ),
+              //             child: Center(
+              //               child: Image.asset(allScreen["image"], scale: 5),
+              //             ),
+              //           ),
+              //           SizedBox(height: 9),
+              //           Text(
+              //             dashbordItam[index]["lable"],
+              //             style: TextStyle(
+              //               fontSize: 11,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     );
+              //   } else {
+              //     return Container(
+              //       height: 50,
+              //       width: 50,
+              //       color: Colors.amber,
+              //     );
+              //   }
+              // },
             ],
           ),
         ],

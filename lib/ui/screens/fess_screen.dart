@@ -7,7 +7,6 @@ import 'package:school_erp/ui/screens/fess_payment_screen.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/appbaw_with_back_buton_widgets.dart';
 import 'package:school_erp/ui/widgets/next_button.dart';
-// import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class FessScreen extends StatefulWidget {
   final bool fromBottomNav;
