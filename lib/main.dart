@@ -7,8 +7,10 @@ import 'package:school_erp/controlar/chat_provider.dart';
 import 'package:school_erp/controlar/fess_provider.dart';
 import 'package:school_erp/controlar/local_list_update.dart';
 import 'package:school_erp/controlar/parents_provider.dart';
+import 'package:school_erp/controlar/recoding_provider.dart';
 import 'package:school_erp/controlar/studentprofile_provider.dart';
 import 'package:school_erp/controlar/teacher_list_provider.dart';
+import 'package:school_erp/controlar/video_provider.dart';
 import 'package:school_erp/routes/router.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +26,9 @@ void main() {
         ChangeNotifierProvider(create: (_) => LocalListUpdate()),
         ChangeNotifierProvider(create: (_) => FessProvider()),
         ChangeNotifierProvider(create: (_) => StudentprofileProvider()),
-        ChangeNotifierProvider(create: (_)=>CurriculumProvider())
+        ChangeNotifierProvider(create: (_) => CurriculumProvider()),
+        ChangeNotifierProvider(create: (_) => VideoProvider()),
+        ChangeNotifierProvider(create: (_)=>RecodingProvider()),
       ],
       child: MyApp(),
     ),

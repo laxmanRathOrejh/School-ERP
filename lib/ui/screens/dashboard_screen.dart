@@ -6,8 +6,15 @@ import 'package:school_erp/ui/screens/contact_screen.dart';
 import 'package:school_erp/ui/screens/curriculum_screen.dart';
 import 'package:school_erp/ui/screens/fess_screen.dart';
 import 'package:school_erp/ui/screens/multi_select_fild.dart';
+import 'package:school_erp/ui/screens/new_recoding.dart';
 import 'package:school_erp/ui/screens/parent_detail_screen.dart';
 import 'package:school_erp/ui/screens/pt_chat_screen.dart';
+import 'package:school_erp/ui/screens/recodde_audio.dart'
+    show AudioApp, RecoddeAudio;
+import 'package:school_erp/ui/screens/recode_audio.dart';
+import 'package:school_erp/ui/screens/student_mark_screen.dart';
+import 'package:school_erp/ui/screens/video_screen.dart';
+import 'package:school_erp/ui/screens/video_screen_degin.dart';
 import 'package:school_erp/ui/widgets/appbar_widget.dart';
 import 'package:school_erp/ui/widgets/dialog/image_dialog.dart';
 
@@ -19,12 +26,18 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  List screenNameList = ["Calendar", "Contact", "Attendance"];
+
+  //List<dynamic> allScreenData = [];
+
   List<Map<String, dynamic>> dashbordItam = [
     {
       "color": Color(0xffeee1fc),
       "image": "assets/image/calendar.png",
       "lable": "Calendar",
-      "route": CalanderScreen(),
+      "route": CalanderScreen()
+      //VideoScreen(),
+      // CalanderScreen(),
       //SimpleVideo()
       //hatScreen(),
       //CalanderScreen(),
@@ -33,19 +46,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
       "color": Color(0xffddf9d8),
       "image": "assets/image/fess.png",
       "lable": "Fees",
-      "route": FessScreen(fromBottomNav: false, forFessHistory: false),
+      "route":       FessScreen(fromBottomNav: false, forFessHistory: false),
+
+      //RecodeAudio()
+      //RecoddeAudio(),
+      //FessScreen(fromBottomNav: false, forFessHistory: false),
     },
     {
       "color": Color(0xffd2e7fa),
       "image": "assets/image/grops.png",
       "lable": "Groups",
-      "route": PtChatsScreen(fromBottomNav: false),
+      "route":  PtChatsScreen(fromBottomNav: false),
+      //NewRecoding(),
+     
     },
     {
       "color": Color(0xffd9f4ff),
       "image": "assets/image/parents.png",
       "lable": "Parents",
-      "route": ParentScreen(),
+      "route": ParentScreen()
+     // VideoScreenDegin(),
+      // ParentScreen(),
     },
     {
       "color": Color(0xfffbf1d3),
@@ -79,57 +100,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       "color": Color(0xffe0e3f3),
       "image": "assets/image/attendance.png",
       "lable": "Attendance",
-      "route": MultiSelectExample(),
+      "route": StudentMarkScreen(),
+      //MultiSelectExample(),
     },
   ];
-
-  List screenNameList = ["Calendar", "Contact", "Attendance"];
-
   List<dynamic> allScreenData = [];
 
-  void addData() {
-    print("Tap on button");
-    // for (int i = 0; i < screenNameList.length; i++) {
-    dashbordItam.removeWhere((map) => !screenNameList.contains(map["lable"]));
-    // for (int i = 0; i < screenNameList.length; i++) {
-    //   dashbordItam.removeWhere((itam) => itam["lable"] !=screenNameList[i]);
-    // }
-    // dashbordItam.removeWhere((e) => e["lable"] == screenNameList[i]);
-    //listOfMaps.removeWhere((map) => !listOfKeys.contains(map["name"]));
-
-    // allScreenData = dashbordItam
-    //     .where((n) => n["lable"] == screenNameList[i])
-    //     .toList();
-    // }
-    //   print("here is new list dara $allScreenData");
-
-    // setState(() {
-    //   dashbordItam.addAll({});
-    //   print("here is list $dashbordItam");
-    // });
-
-    // for (int i = 0; i < screenNameList.length; i++) {
-    //   for (var itan in dashbordItam) {
-    //     if (itan["lable"] != screenNameList[i]) {
-    //       setState(() {
-    //         dashbordItam.add(itan);
-    //       });
-    //     }
-    //   }
-    // }
-    //       print("here is all SCreen list $allScreenData");
-    //       debugPrint("here is list itam $itan");
-    //     }
-    //   }
-    // }
-    //   dashbordItam.map((e) => {e["lable"] == screenNameList[0], });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +143,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               top: 2.5,
                             ),
                             child: InkWell(
-                              onTap: () {
-                                addData();
-                              },
+                              onTap: () {},
                               child: Text(
                                 "Scholar No. 112233",
                                 style: TextStyle(
@@ -260,6 +234,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 30),
 
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: dashbordItam.length,
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2,
+                  childAspectRatio: .87,
+                ),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => dashbordItam[index]["route"],
+                        ),
+                      );
+                    },
+
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: dashbordItam[index]["color"],
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              dashbordItam[index]["image"],
+                              scale: 5,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 9),
+                        Text(
+                          dashbordItam[index]["lable"],
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+
               // Wrap(
               //   children: [
               //     for (var map in dashbordItam)
@@ -304,29 +330,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // ),
 
               //    itemCount: dashbordItam
-              //.where((map) => screenNameList.contains(map["lable"]))
-              //.length,
+              // .where((map) => screenNameList.contains(map["lable"]))
+              // .length,
               //  var filtered = dashbordItam
               //  .where((map) => screenNameList.contains(map["lable"]))
-              //.toList();
+              // .toList();
               // var map = filtered[index];
               // GridView.builder(
-              //   itemCount: dashbordItam
-              //       .where((map) => screenNameList.contains(map["lable"]))
-              //       .length,
+
+              //   itemCount: dashbordItam.length,
+              //   // itemCount: dashbordItam
+              //   //     .where((map) => screenNameList.contains(map["lable"]))
+              //   //     .length,
               //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               //     crossAxisCount: 3,
               //   ),
               //   itemBuilder: (context, index) {
-              //     var filtered = dashbordItam
-              //         .where((map) => screenNameList.contains(map["lable"]))
-              //         .toList();
-              //     var map = filtered[index];
+              //     // var filtered = dashbordItam
+              //     //     .where((map) => screenNameList.contains(map["lable"]))
+              //     //     .toList();
+              //     // var map = filtered[index];
               //     return InkWell(
               //       onTap: () {
               //         Navigator.push(
               //           context,
-              //           MaterialPageRoute(builder: (context) => map["route"]),
+              //           MaterialPageRoute(
+              //             builder: (context) => dashbordItam[index]["route"],
+              //           ),
               //         );
               //       },
               //       child: Column(
@@ -336,15 +366,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               //             height: 80,
               //             decoration: BoxDecoration(
               //               borderRadius: BorderRadius.circular(15),
-              //               color: map["color"],
+              //               color: dashbordItam[index]["color"],
               //             ),
               //             child: Center(
-              //               child: Image.asset(map["image"], scale: 5),
+              //               child: Image.asset(
+              //                 dashbordItam[index]["image"],
+              //                 scale: 5,
+              //               ),
               //             ),
               //           ),
               //           SizedBox(height: 9),
               //           Text(
-              //             map["lable"],
+              //             dashbordItam[index]["lable"],
               //             style: TextStyle(
               //               fontSize: 11,
               //               fontWeight: FontWeight.w700,
@@ -356,52 +389,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
               //   },
               // ),
 
-              GridView.count(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(left: 20, right: 20),
-                crossAxisCount: 3,
-                crossAxisSpacing: 2,
-                mainAxisSpacing: 2,
-                childAspectRatio: .87,
-                children: [
-                  for (var map in dashbordItam)
-                    if (screenNameList.contains(map["lable"]))
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => map["route"],
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: map["color"],
-                              ),
-                              child: Center(
-                                child: Image.asset(map["image"], scale: 5),
-                              ),
-                            ),
-                            SizedBox(height: 9),
-                            Text(
-                              map["lable"],
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                ],
-              ),
+              // GridView.count(
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   padding: EdgeInsets.only(left: 20, right: 20),
+              //   crossAxisCount: 3,
+              //   crossAxisSpacing: 2,
+              //   mainAxisSpacing: 2,
+              //   childAspectRatio: .87,
+              //   children: [
+              //     for (var map in dashbordItam)
+              //       if (screenNameList.contains(map["lable"]))
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => map["route"],
+              //               ),
+              //             );
+              //           },
+              //           child: Column(
+              //             children: [
+              //               Container(
+              //                 width: 80,
+              //                 height: 80,
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(15),
+              //                   color: map["color"],
+              //                 ),
+              //                 child: Center(
+              //                   child: Image.asset(map["image"], scale: 5),
+              //                 ),
+              //               ),
+              //               SizedBox(height: 9),
+              //               Text(
+              //                 map["lable"],
+              //                 style: TextStyle(
+              //                   fontSize: 11,
+              //                   fontWeight: FontWeight.w700,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //   ],
+              // ),
 
               // var newScreenList = dashbordItam
               //     .where((n) => n["lable"] == screenNameList)
